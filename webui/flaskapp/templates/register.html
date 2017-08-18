@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Register{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Add a new student account.</h1>
+</div>
+<form action="/register" method="post">
+    {{ wtf.quick_form(form) }}
+</form>
+
+<br><br>
+<p class="text-warning" style="font-size:20px;border-top:1px solid #eee;">
+    <b style="color: #C00;">注意</b>&nbsp;&nbsp;&nbsp;增加的用户名不能与已存在的用户名相同，若增加的用户名已存在，可以考虑点击下面的链接直接修改该用户的密码
+</p>
+<a href="{{ url_for('update_pwd') }}" style="display: block;font-size: 20px;text-align:center;">修改其密码</a>
+{% endblock %}

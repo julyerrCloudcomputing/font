@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}admin page{% endblock title %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, administrator!</h1>
+</div>
+<div>
+    <ul>
+        <li><a href="{{ url_for('register') }}" title="手动添加单个用户，用户名不能与已经存在的用户相同">添加一个新用户</a></li>
+        <li><a href="{{ url_for('update_pwd') }}" title="修改一个已存在的学生的密码">修改某个学生的密码</a></li>
+        <li><a href="{{ url_for('delete') }}" title="手动删除单个已存在的用户">删除某个用户</a></li>
+        <li><a href="{{ url_for('batch_import') }}" title="通过上传包含用户名与密码的csv文件，批量导入用户">上传csv文件，批量导入学生帐号与密码</a></li>
+    </ul>
+</div>
+{% endblock page_content%}

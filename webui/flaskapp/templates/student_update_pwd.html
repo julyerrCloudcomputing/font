@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}register{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Update your password.</h1>
+</div>
+
+<form action="/student_update_pwd" method="post">
+    {{ wtf.quick_form(form) }}
+</form>
+
+<br><br>
+<p class="text-warning" style="font-size:20px;border-top:1px solid #eee;">
+    <b style="color: #C00;">提示</b>&nbsp;&nbsp;&nbsp;修改密码之后务必记住您的密码。若忘记密码，则可以向管理员老师申请重新修改您帐号的密码。
+</p>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}{{ super() }}{% endblock title %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, {{ name }}</h1>
+</div>
+
+<div class="container1">
+	<ul class="evenflow sample_1">
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='1.png') }}">
+		</a>
+		<p>Python</p>
+	</li>
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='2.png') }}"></a>
+		<p>MySQL</p>
+	</li>
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='3.png') }}"></a>
+	</li>
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='4.png') }}"></a>
+	</li>
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='5.png') }}"></a>
+	</li>
+	<li class="evenflow_scale">
+		<a href="http://www.baidu.com" target="_blank">
+		<img src="{{ url_for('static', filename='6.png') }}"></a>
+	</li>
+	</ul>
+</div>
+
+
+{% endblock %}

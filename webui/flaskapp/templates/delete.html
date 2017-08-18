@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Delete{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Delete a student's account.</h1>
+</div>
+
+<form action="/delete" method="post">
+    {{ wtf.quick_form(form) }}
+</form>
+
+<br><br>
+<p class="text-warning" style="font-size:20px;border-top:1px solid #eee;">
+    <b style="color: #C00;">提示</b>&nbsp;&nbsp;&nbsp;您要删除的用户必须已存在，请确认用户名
+</p>
+
+<div class="page-header">
+    <h3>A table of students' accounts.</h3>
+</div>
+
+<div class="container1">
+	<ul>
+        <li class="show_li">已存在的用户名</li><br>
+        {% for user in users %}
+        <u><li class="show_li">{{ user.username }}</li></u>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

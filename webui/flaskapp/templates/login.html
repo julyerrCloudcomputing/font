@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}请先登录{% endblock %}
+
+{% block metas %}
+    {{ super() }}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% endblock metas %}
+
+{% block styles %}
+    {{ super() }}
+{% endblock styles %}
+
+{% block content%}
+    {{ super() }}
+    <div class="container demo-4">
+        <div class="content">
+            <div id="large-header" class="large-header">
+                <canvas id="demo-canvas"></canvas>
+                <h1 class="main-title"><span>HDU IMOOP</span></h1>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block page_content %}
+    <form action="/login" method="post" class="form">
+    {{ wtf.quick_form(form) }}
+    </form>
+{% endblock page_content %}
+
+{%block scripts%}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='demo-1.js') }}"></script>
+{% endblock scripts%}

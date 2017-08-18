@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Batch Import{% endblock %}
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Upload a .csv file to import a batch of student's accounts.</h1>
+</div>
+
+<form action=""
+      method="post"
+      enctype="multipart/form-data">
+
+    <label for="file" class="btn btn-default">浏览本地文件</label><br>
+    <input id="file" type="file" name="file" style="display:none;">
+    <br>
+    <input type="submit" value="上传" class="btn btn-success">
+</form>
+
+<br><br>
+<p class="text-warning" style="font-size:20px;border-top:1px solid #eee;">
+    <b style="color: #C00;">提示</b>&nbsp;&nbsp;&nbsp;上传的文件必须是csv类型，你可以将excel表格另存为csv类型文件。
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;导入的学号与姓名必须是一对一的格式，如图：
+</p>
+<img src="{{ url_for('static', filename='batch_import.png') }}" />
+{% endblock %}
