@@ -21,7 +21,8 @@ def dashboard():
 @home.route('/teacher/dashboard')
 @login_required
 def teacher_dashboard():
-	if current_user.id > 10000:
+	print(current_user.isTeacher)
+	if not current_user.isTeacher:
 		abort(403)
 	return render_template('home/teacher_dashboard.html', title='Teacher Dashboard')
 

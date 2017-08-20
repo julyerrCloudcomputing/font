@@ -10,21 +10,21 @@ from ..models import Student,Teacher,Experiment,Course
 @admin.route('/courses', methods=['GET', 'POST'])
 @login_required
 def list_courses():
-    if current_user.id > 10000:
-        abort(403)
-    courses = Course.query.filer_by(teacherName=current_user.name).all()
+    if not current_user.isTeacher:
+        abort(403)    
+    courses = Course.query.filter_by(teacherName=current_user.name).all()
     return render_template('admin/courses/courses.html',
                            courses=courses, title="courses")
 
 @admin.route('/courses/edit/<string:name>', methods=['GET', 'POST'])
 @login_required
 def edit_course(name):
-    if current_user.id > 10000:
-        abort(403)
     """
     Edit a course
     """
 
+    if not current_user.isTeacher:
+        abort(403)    
     add_course = False
 
     course = Course.query.filter_by(name=name).first()
@@ -49,14 +49,14 @@ def edit_course(name):
 @admin.route('/courses/add', methods=['GET', 'POST'])
 @login_required
 def add_course():
-    if current_user.id > 10000:
-        abort(403)
+    if not current_user.isTeacher:
+        abort(403)    
     add_course = True
     form = CourseForm()
     if form.validate_on_submit():
-        course = course(name=form.name.data,
+        course = Course(name=form.name.data,
                                 description=form.description.data,teacherName=current_user.name,
-                                courseNums=form.courseNums)
+                                courseNums=form.courseNums.data)
         try:
             # add course to the database
             db.session.add(course)
@@ -77,9 +77,8 @@ def add_course():
 @admin.route('/courses/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
 def delete_course(name):
-    if current_user.id > 10000:
+    if not current_user.isTeacher:
         abort(403)
-
     """
     Delete a course from the database
     """
@@ -95,9 +94,8 @@ def delete_course(name):
 @admin.route('/experiments')
 @login_required
 def list_experiments():
-    if current_user.id > 10000:
-        abort(403)
-
+    if not current_user.isTeacher:
+        abort(403)    
     """
     List all experiments
     """
@@ -112,14 +110,13 @@ def list_experiments():
 @admin.route('/experiments/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
 def delete_experiment(name):
-    if current_user.id > 10000:
+    if not current_user.isTeacher:
         abort(403)
-
     """
     Assign a department and a role to an experiment
     """
 
-    experiment = experiment.query.filter_by(name=name).first()
+    experiment = Experiment.query.filter_by(name=name).first()
 
     db.session.delete(experiment)
     db.session.commit()
@@ -130,16 +127,15 @@ def delete_experiment(name):
 @admin.route('/experiments/edit/<string:name>', methods=['GET', 'POST'])
 @login_required
 def edit_experiment(name):
-    if current_user.id > 10000:
+    if not current_user.isTeacher:
         abort(403)
-
     """
     Edit a experiment
     """
 
     add_experiment = False
 
-    experiment = experiment.query.filter_by(name=name).first()
+    experiment = Experiment.query.filter_by(name=name).first()
     form = ExperimentForm(obj=experiment)
     if form.validate_on_submit():
         experiment.name = form.name.data
@@ -165,9 +161,8 @@ def edit_experiment(name):
 @admin.route('/experiments/add', methods=['GET', 'POST'])
 @login_required
 def add_experiment():
-    if current_user.id > 10000:
+    if not current_user.isTeacher:
         abort(403)
-
     """
     Add a experiment
     """

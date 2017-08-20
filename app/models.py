@@ -10,6 +10,7 @@ class Teacher(UserMixin,db.Model):
 
     name = db.Column(db.String(60), nullable=False,primary_key=True)
     password_hash = db.Column(db.String(128),nullable=False)
+    isTeacher = db.Column(db.Boolean(),default=True)
     courses = db.relationship('Course', backref='teachers',
                                 lazy='dynamic')
     @property
@@ -48,6 +49,7 @@ class Student(UserMixin,db.Model):
 
     name = db.Column(db.String(60), nullable=False,primary_key=True)
     password_hash = db.Column(db.String(128),nullable=False)
+    isTeacher = db.Column(db.Boolean(),default=False)
     courses = db.relationship('Course',secondary=registrations,  
                                     backref=db.backref('students', lazy='dynamic'),  
                                     lazy='dynamic')
@@ -79,9 +81,9 @@ class Student(UserMixin,db.Model):
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
-    teacher = Teacher.query.filter_by(name=string(user_id)).first()
+    teacher = Teacher.query.filter_by(name=str(user_id)).first()
     if teacher is None:
-        return Student.query.filter_by(name=string(user_id)).first()
+        return Student.query.filter_by(name=str(user_id)).first()
     return teacher
 
 
