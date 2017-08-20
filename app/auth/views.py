@@ -77,7 +77,7 @@ def login_teacher():
             login_user(teacher)
 
             # redirect to the dashboard page after login
-            return redirect(url_for('home.teacher_dashborad'))
+            return redirect(url_for('home.teacher_dashboard'))
 
 
         # when login details are incorrect

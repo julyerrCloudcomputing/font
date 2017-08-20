@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo
 
-from ..models import Student
+from ..models import Student,Teacher
 
 
 class RegistrationForm(FlaskForm):
@@ -13,7 +13,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_username(self, field):
-        if Student.query.filter_by(name=field.data).first():
+        if Student.query.filter_by(name=field.data).first() or Teacher.filter_by(name=field.name).first:
             raise ValidationError('Username is already in use.')
 
 

@@ -8,9 +8,8 @@ from app import db, login_manager
 class Teacher(UserMixin,db.Model):
     __tablename__ = 'teachers'
 
-    id = db.Column(db.Integer, autoincrement=True)
-    name = db.Column(db.String(60), index=True, primary_key=True)
-    password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(60), nullable=False,primary_key=True)
+    password_hash = db.Column(db.String(128),nullable=False)
     courses = db.relationship('Course', backref='teachers',
                                 lazy='dynamic')
     @property
@@ -25,29 +24,30 @@ class Teacher(UserMixin,db.Model):
         """
         Set password to a hashed password
         """
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = password
 
     def verifypassword(self, password):
         """
         Check if hashed password matches actual password
         """
-        return check_password_hash(self.password_hash, password)
+        return self.password_hash == password
 
     def __repr__(self):
         return '<Teacher: {}>'.format(self.username) 
+    def get_id(self):
+        return unicode(self.name)
 
 registrations = db.Table('registrations',  
-    db.Column('studentName', db.Integer, db.ForeignKey('students.name')),  
-    db.Column('courseName', db.Integer, db.ForeignKey('courses.name'))  
+    db.Column('studentName', db.String(60), db.ForeignKey('students.name')),  
+    db.Column('courseName', db.String(60), db.ForeignKey('courses.name'))  
 )  
   
 
 class Student(UserMixin,db.Model):
     __tablename__ = 'students'
 
-    id = db.Column(db.Integer,Sequence('models_student_seq', start=10000, increment=1))
-    name = db.Column(db.String(60), index=True, primary_key=True)
-    password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(60), nullable=False,primary_key=True)
+    password_hash = db.Column(db.String(128),nullable=False)
     courses = db.relationship('Course',secondary=registrations,  
                                     backref=db.backref('students', lazy='dynamic'),  
                                     lazy='dynamic')
@@ -74,20 +74,22 @@ class Student(UserMixin,db.Model):
     def __repr__(self):
         return '<Student: {}>'.format(self.name) 
 
+    def get_id(self):
+        return unicode(self.name)
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
-    if user_id > 10000 :
-        return Student.query.get(int(user_id))
-    else:
-        return Teacher.query.get(int(user_id))
+    teacher = Teacher.query.filter_by(name=string(user_id)).first()
+    if teacher is None:
+        return Student.query.filter_by(name=string(user_id)).first()
+    return teacher
 
 
 class Course(db.Model):
 
     __tablename__ = 'courses'
 
-    name = db.Column(db.String(60), unique=True,primary_key=True)
+    name = db.Column(db.String(60),primary_key=True)
     description = db.Column(db.String(200))
     teacherName = db.Column(db.String(60), db.ForeignKey('teachers.name'))
     courseNums = db.Column(db.String(60), unique=True)
@@ -114,5 +116,5 @@ class Experiment(db.Model):
 
 class Container(db.Model):
     __tablename__ = 'containers'
-    name = db.Column(db.String(60), unique=True)
+    name = db.Column(db.String(60), primary_key=True)
 
