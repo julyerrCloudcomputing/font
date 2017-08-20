@@ -13,9 +13,10 @@
                         <thead>
                             <tr>
                                 <th width="15%"> Name </th>
-                                <th width="40%"> Description </th>
-                                <th width="15%"> Edit </th>
-                                <th width="15%"> Delete </th>
+                                <th width="25%"> Description </th>
+                                <th width="30%"> uuid </th>
+                                <th width="5%"> Edit </th>
+                                <th width="5%"> Delete </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,13 +24,14 @@
                             <tr>
                                 <td> {{ course.name }} </td>
                                 <td> {{ course.description }} </td>
+                                <td> {{ course.courseNums }} </td>
                                 <td>
-                                    <a href="{{ url_for('admin.edit_course', id=course.name) }}" class="green">
+                                    <a href="{{ url_for('admin.edit_course', name=course.name) }}" class="green">
                                         <i class="fa fa-pencil "></i> Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ url_for('admin.delete_course', id=course.name) }}" class="red">
+                                    <a href="{{ url_for('admin.delete_course', name=course.name) }}" class="red">
                                         <i class="fa fa-trash"></i> Delete
                                     </a>
                                 </td>

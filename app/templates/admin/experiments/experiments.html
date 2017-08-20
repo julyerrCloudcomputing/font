@@ -25,16 +25,16 @@
                             <tr>
                                 <td> {{ experiment.name }}</td>
                                 <td>
-                                    {{ experiment.descrition }}
+                                    {{ experiment.description }}
                                 </td>
                                 <td> {{ experiment.courseName }}</td>
                                 <td>
                                    {{ experiment.containerName }}
                                 </td>
+                                <td>
                                     <a href="{{ url_for('admin.edit_experiment', name=experiment.name) }}" class="blue">
                                          Edit
                                     </a>
-                                <td>
                                 </td>
                                 <td>
                                     <a href="{{ url_for('admin.delete_experiment', name=experiment.name) }}" class="red">
@@ -46,6 +46,7 @@
                         </tbody>
                     </table>
                 </div>
+                    <div style="text-align: center">
                 {% else %}
                     <div style="text-align: center">
                         <h3> No experiments have been added. </h3>

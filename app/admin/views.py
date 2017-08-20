@@ -143,7 +143,6 @@ def edit_experiment(name):
         experiment.content = form.content.data
         experiment.courseName = form.courseName.data
         experiment.containerName = form.containerName.data
-        db.session.add(experiment)
         db.session.commit()
         flash('You have successfully edited the experiment.')
 
@@ -171,11 +170,8 @@ def add_experiment():
 
     form = ExperimentForm()
     if form.validate_on_submit():
-        experiment.name = form.name.data
-        experiment.description = form.description.data
-        experiment.content = form.content.data
-        experiment.courseName = form.courseName.data
-        experiment.containerName = form.containerName.data
+        experiment = Experiment(name=form.name.data,description=form.description.data,
+            content=form.content.data,courseName=form.courseName.data,containerName=form.containerName.data.name)
         db.session.add(experiment)
         db.session.commit()
         flash('You have successfully edited the experiment.')

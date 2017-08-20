@@ -28,12 +28,12 @@ def teacher_dashboard():
 
 
 @home.route('/list_courses', methods=['GET', 'POST'])
-@login_required
+@login_required	
 def list_courses():
-	courses = Student.query().filter_by(name=current_user.name).courses()
+	courses = Student.query.filter_by(name=current_user.name).first().courses
 	experimentSet = []
 	for i in courses:
-		experiments=Experiment.query().filter_by(courseName=i.name).all()
+		experiments=Experiment.query.filter_by(courseName=i.name).all()
 		experimentSet.append(experiments)
 	return render_template('home/list_courses.html', title='Student Classes',courses=courses,experimentSet=experimentSet)
 
@@ -41,15 +41,16 @@ def list_courses():
 @login_required
 def selectCourse():
 	nums=request.form['nums']
-	course = Course.query.filter_by(courseNums).first()
-	if course is not None or nums == course.courseNums:
+	course = Course.query.filter_by(courseNums=nums).first()
+	if course:
 		current_user.courses.append(course)
+		db.session.commit()
 	else:
 		flash("no course set the id ")
 	return redirect(url_for('home.list_courses'))
 
-@home.route('/experiment', methods=['GET', 'POST'])
+@home.route('/experiment/<string:name>', methods=['GET', 'POST'])
 @login_required
 def experiment(name):
-	return render_template('pwd/index.html', title='terminal')
+	return render_template('pwd/index.html', title=name)
 	
