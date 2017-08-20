@@ -1,0 +1,62 @@
+{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}experiments{% endblock %} {% block body %}
+<div class="content-section">
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <br/> {{ utils.flashed_messages() }}
+                <br/>
+                <h1 style="text-align:center;">experiments</h1>
+                {% if experiments %}
+                <hr class="intro-divider">
+                <div class="center">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="15%"> Name </th>
+                                <th width="30%"> Description </th>
+                                <th width="20%"> Course </th>
+                                <th width="18%"> Container Name </th>
+                                <th width="20%"> Edit </th>
+                                <th width="30%"> Delete </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for experiment in experiments %} 
+                            <tr>
+                                <td> {{ experiment.name }}</td>
+                                <td>
+                                    {{ experiment.descrition }}
+                                </td>
+                                <td> {{ experiment.courseName }}</td>
+                                <td>
+                                   {{ experiment.containerName }}
+                                </td>
+                                    <a href="{{ url_for('admin.edit_experiment', id=experiment.id) }}" class="blue">
+                                         Edit
+                                    </a>
+                                <td>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('admin.delete_experiment', id=experiment.id) }}" class="red">
+                                         Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %} {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <div style="text-align: center">
+                        <h3> No experiments have been added. </h3>
+                        <hr class="intro-divider"> {% endif %}
+                        <a href="{{ url_for('admin.add_experiment') }}" class="btn btn-default btn-lg">
+                            <i class="fa fa-plus"></i> Add Experiment
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

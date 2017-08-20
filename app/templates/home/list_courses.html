@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}View Courses{% endblock %} {% block body %}
+<div id="mainwrap">
+    <!-- <img src="../../static/img/avatar.png" id="avatar"> -->
+    <p id="cname">{{current_user.name}} </p>
+    <!-- add the course button -->
+    <form action="{{ url_for('home.selectCourse') }}", method="POST">
+        <input type="text" name="nums">
+        <input type="submit" name="submit">
+    </form>
+    {% if courses %}
+    {% set index = 0 %}
+    {% for i in courses %}
+        {% index++ %}
+        <ul>{{ i.name }}</ul>
+        {% for j in experimentSet[index] %}
+             <li><a href="{{ url_for('home.experiment') , id = j.id }}">j.name</a></li>
+        {% endfor %}
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
