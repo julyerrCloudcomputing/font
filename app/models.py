@@ -8,8 +8,8 @@ from app import db, login_manager
 class Teacher(UserMixin,db.Model):
     __tablename__ = 'teachers'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), index=True, unique=True)
+    id = db.Column(db.Integer, autoincrement=True)
+    name = db.Column(db.String(60), index=True, primary_key=True)
     password_hash = db.Column(db.String(128))
     courses = db.relationship('Course', backref='teachers',
                                 lazy='dynamic')
@@ -37,16 +37,16 @@ class Teacher(UserMixin,db.Model):
         return '<Teacher: {}>'.format(self.username) 
 
 registrations = db.Table('registrations',  
-    db.Column('student_id', db.Integer, db.ForeignKey('students.id')),  
-    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))  
+    db.Column('studentName', db.Integer, db.ForeignKey('students.name')),  
+    db.Column('courseName', db.Integer, db.ForeignKey('courses.name'))  
 )  
   
 
 class Student(UserMixin,db.Model):
     __tablename__ = 'students'
 
-    id = db.Column(db.Integer,Sequence('models_student_seq', start=10000, increment=1), primary_key=True)
-    name = db.Column(db.String(60), index=True, unique=True)
+    id = db.Column(db.Integer,Sequence('models_student_seq', start=10000, increment=1))
+    name = db.Column(db.String(60), index=True, primary_key=True)
     password_hash = db.Column(db.String(128))
     courses = db.relationship('Course',secondary=registrations,  
                                     backref=db.backref('students', lazy='dynamic'),  
@@ -87,10 +87,9 @@ class Course(db.Model):
 
     __tablename__ = 'courses'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
+    name = db.Column(db.String(60), unique=True,primary_key=True)
     description = db.Column(db.String(200))
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    teacherName = db.Column(db.String(60), db.ForeignKey('teachers.name'))
     courseNums = db.Column(db.String(60), unique=True)
     # students = db.relationship('Student', backref='courses',
     #                             lazy='dynamic')
@@ -103,10 +102,9 @@ class Experiment(db.Model):
 
     __tablename__ = 'experiments'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(60), unique=True)
+    name = db.Column(db.String(60), primary_key=True)
     description = db.Column(db.String(200))
-    content = db.Colume(db.LargeBinary)
+    content = db.Column(db.LargeBinary)
     courseName = db.Column(db.String(60), db.ForeignKey('courses.name'))
     containerName = db.Column(db.String(60))
     # students = db.relationship('Student', backref='courses',
@@ -114,8 +112,7 @@ class Experiment(db.Model):
     def __repr__(self):
         return '{}'.format(self.name)
 
-class Container(db.model):
+class Container(db.Model):
     __tablename__ = 'containers'
-    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
 

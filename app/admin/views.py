@@ -1,7 +1,7 @@
 from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from . import admin
-from forms import CourseForm, RoleForm, experimentAssignForm, GradeForm
+from forms import CourseForm, ExperimentForm
 from .. import db
 from ..models import Student,Teacher,Experiment,Course
 
@@ -12,13 +12,13 @@ from ..models import Student,Teacher,Experiment,Course
 def list_courses():
     if current_user.id > 10000:
         abort(403)
-    courses = Course.query.filer_by(teacher_id=current_user.id).all()
+    courses = Course.query.filer_by(teacherName=current_user.name).all()
     return render_template('admin/courses/courses.html',
                            courses=courses, title="courses")
 
-@admin.route('/courses/edit/<int:id>', methods=['GET', 'POST'])
+@admin.route('/courses/edit/<string:name>', methods=['GET', 'POST'])
 @login_required
-def edit_courses(id):
+def edit_course(name):
     if current_user.id > 10000:
         abort(403)
     """
@@ -27,7 +27,7 @@ def edit_courses(id):
 
     add_course = False
 
-    course = Course.query.get_or_404(id)
+    course = Course.query.filter_by(name=name).first()
     form = CourseForm(obj=course)
     if form.validate_on_submit():
         course.name = form.name.data
@@ -55,7 +55,7 @@ def add_course():
     form = CourseForm()
     if form.validate_on_submit():
         course = course(name=form.name.data,
-                                description=form.description.data,teacher_id=current_user.id,
+                                description=form.description.data,teacherName=current_user.name,
                                 courseNums=form.courseNums)
         try:
             # add course to the database
@@ -74,9 +74,9 @@ def add_course():
                            add_course=add_course, form=form,
                            title="Add Course")    
 
-@admin.route('/courses/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/courses/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
-def delete_course(id):
+def delete_course(name):
     if current_user.id > 10000:
         abort(403)
 
@@ -84,7 +84,7 @@ def delete_course(id):
     Delete a course from the database
     """
 
-    course = Course.query.get_or_404(id)
+    course = Course.query.filter_by(name=name).first()
     db.session.delete(course)
     db.session.commit()
     flash('You have successfully deleted the course.')
@@ -102,16 +102,16 @@ def list_experiments():
     List all experiments
     """
     experiments = []
-    for i in Course.query.filter_by(teacher_id=current_user.id):
+    for i in Course.query.filter_by(teacherName=current_user.name):
         for j in Experiment.query.filter_by(courseName=i.name).all():
             experiments.append(j)
     return render_template('admin/experiments/experiments.html',
                            experiments=experiments, title='experiments')
 
 
-@admin.route('/experiments/delete/<int:id>', methods=['GET', 'POST'])
+@admin.route('/experiments/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
-def delete_experiment(id):
+def delete_experiment(name):
     if current_user.id > 10000:
         abort(403)
 
@@ -119,7 +119,7 @@ def delete_experiment(id):
     Assign a department and a role to an experiment
     """
 
-    experiment = experiment.query.get_or_404(id)
+    experiment = experiment.query.filter_by(name=name).first()
 
     db.session.delete(experiment)
     db.session.commit()
@@ -127,9 +127,9 @@ def delete_experiment(id):
 
     return redirect(url_for('admin.list_experiments'))
 
-@admin.route('/experiments/edit/<int:id>', methods=['GET', 'POST'])
+@admin.route('/experiments/edit/<string:name>', methods=['GET', 'POST'])
 @login_required
-def edit_experiment(id):
+def edit_experiment(name):
     if current_user.id > 10000:
         abort(403)
 
@@ -139,7 +139,7 @@ def edit_experiment(id):
 
     add_experiment = False
 
-    experiment = experiment.query.get_or_404(id)
+    experiment = experiment.query.filter_by(name=name).first()
     form = ExperimentForm(obj=experiment)
     if form.validate_on_submit():
         experiment.name = form.name.data
@@ -162,9 +162,9 @@ def edit_experiment(id):
     return render_template('admin/experiments/experiment.html', add_experiment=add_experiment,
                            form=form, title="Edit experiment")
 
-@admin.route('/experiments/add/<int:id>', methods=['GET', 'POST'])
+@admin.route('/experiments/add', methods=['GET', 'POST'])
 @login_required
-def add_experiment(id):
+def add_experiment():
     if current_user.id > 10000:
         abort(403)
 

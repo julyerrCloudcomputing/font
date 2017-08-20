@@ -24,12 +24,12 @@
                                 <td> {{ course.name }} </td>
                                 <td> {{ course.description }} </td>
                                 <td>
-                                    <a href="{{ url_for('admin.edit_course', id=course.id) }}" class="green">
+                                    <a href="{{ url_for('admin.edit_course', id=course.name) }}" class="green">
                                         <i class="fa fa-pencil "></i> Edit
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ url_for('admin.delete_course', id=course.id) }}" class="red">
+                                    <a href="{{ url_for('admin.delete_course', id=course.name) }}" class="red">
                                         <i class="fa fa-trash"></i> Delete
                                     </a>
                                 </td>

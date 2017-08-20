@@ -22,14 +22,14 @@ def dashboard():
 @login_required
 def teacher_dashboard():
 	if current_user.id > 10000:
-			abort(403)
+		abort(403)
     return render_template('home/teacher_dashboard.html', title='Teacher Dashboard')
 
 
 @home.route('/list_courses', methods=['GET', 'POST'])
 @login_required
 def list_courses():
-	courses = Student.query().filter_by(id=current_user.id).courses()
+	courses = Student.query().filter_by(name=current_user.name).courses()
 	experimentSet = []
 	for i in courses:
 		experiments=Experiment.query().filter_by(courseName=i.name).all()
@@ -41,7 +41,7 @@ def list_courses():
 def selectCourse():
 	nums=request.form['nums']
 	course = Course.query.filter_by(courseNums).first()
-	if course is not None || nums == course.courseNums:
+	if course is not None or nums == course.courseNums:
 		current_user.courses.append(course)
 	else:
 		flash("no course set the id ")
@@ -49,6 +49,6 @@ def selectCourse():
 
 @home.route('/experiment', methods=['GET', 'POST'])
 @login_required
-def experiment(id):
+def experiment(name):
     return render_template('pwd/index.html', title='terminal')
 	

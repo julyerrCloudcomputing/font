@@ -31,13 +31,13 @@
                                 <td>
                                    {{ experiment.containerName }}
                                 </td>
-                                    <a href="{{ url_for('admin.edit_experiment', id=experiment.id) }}" class="blue">
+                                    <a href="{{ url_for('admin.edit_experiment', name=experiment.name) }}" class="blue">
                                          Edit
                                     </a>
                                 <td>
                                 </td>
                                 <td>
-                                    <a href="{{ url_for('admin.delete_experiment', id=experiment.id) }}" class="red">
+                                    <a href="{{ url_for('admin.delete_experiment', name=experiment.name) }}" class="red">
                                          Delete
                                     </a>
                                 </td>

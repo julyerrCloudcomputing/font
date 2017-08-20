@@ -13,7 +13,7 @@
         {% index++ %}
         <ul>{{ i.name }}</ul>
         {% for j in experimentSet[index] %}
-             <li><a href="{{ url_for('home.experiment') , id = j.id }}">j.name</a></li>
+             <li><a href="{{ url_for('home.experiment') , name = j.name }}">j.name</a></li>
         {% endfor %}
     {% endfor %}
     {% endif %}
