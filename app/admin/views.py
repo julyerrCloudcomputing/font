@@ -64,13 +64,13 @@ def add_course():
             flash('You have successfully added a new course.')
         except:
             # in case course name already exists
-            flash('Error: course name already exists.')
+            flash('Error: course name already exists or uuid should different .')
 
         # redirect to courses page
         return redirect(url_for('admin.list_courses'))
 
     # load course template
-    return render_template('admin/courses/course.html', action="Add",
+    return render_template('admin/courses/course.html',
                            add_course=add_course, form=form,
                            title="Add Course")    
 
@@ -142,7 +142,7 @@ def edit_experiment(name):
         experiment.description = form.description.data
         experiment.content = form.content.data
         experiment.courseName = form.courseName.data
-        experiment.containerName = form.containerName.data
+        experiment.containerName = form.containerName.data.name
         db.session.commit()
         flash('You have successfully edited the experiment.')
 
@@ -172,13 +172,17 @@ def add_experiment():
     if form.validate_on_submit():
         experiment = Experiment(name=form.name.data,description=form.description.data,
             content=form.content.data,courseName=form.courseName.data,containerName=form.containerName.data.name)
-        db.session.add(experiment)
-        db.session.commit()
-        flash('You have successfully edited the experiment.')
+        try:
+            db.session.add(experiment)
+            db.session.commit()
+            flash('You have successfully added the experiment.')
+        except:
+            flash('The experiment has already exists.')
+            
 
         # redirect to the experiments page
         return redirect(url_for('admin.list_experiments'))
 
     return render_template('admin/experiments/experiment.html', add_experiment=add_experiment,
-                           form=form, title="Edit experiment")
+                           form=form, title="Add experiment")
 

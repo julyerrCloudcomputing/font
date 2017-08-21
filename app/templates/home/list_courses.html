@@ -8,13 +8,11 @@
         <input type="submit" name="submit">
     </form>
     {% if courses %}
-    {% set index = 0 %}
     {% for i in courses %}
         <ul>{{ i.name }}</ul>
-        {% for j in experimentSet[index] %}
-             <li><a href="{{ url_for('home.experiment',name=j) }}">{{ j }}</a></li>
+        {% for j in experimentSet[loop.index0] %}
+             <li><a href="{{ url_for('home.experiment',name=j.name) }}">{{ j.name }}</a></li>
         {% endfor %}
-        {% set index = index +1 %}
     {% endfor %}
     {% else %}
     <h1>No course selected yet !</h1>

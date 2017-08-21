@@ -9,7 +9,7 @@ import uuid
 class CourseForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    courseNums = StringField('courseNums',default=uuid.uuid1(),render_kw={'readonly': True} )
+    courseNums = StringField('CourseNums',default=uuid.uuid1() )
     submit = SubmitField('Submit')
 
 
