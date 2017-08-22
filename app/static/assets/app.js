@@ -9,17 +9,122 @@
   $interpolateProvider.endSymbol(']]');
 
   });
+ 
   app.controller('PlayController', ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$window', 'TerminalService', 'KeyboardShortcutService', function($scope, $log, $http, $location, $timeout, $mdDialog, $window, TerminalService, KeyboardShortcutService) {
-     $http({
-        method: 'POST',
-        url: 'http://116.196.86.115/',
-        data : { ImageName : document.getElementById('imageName') }
+    $scope.getSession = function(sessionId) {
+      $http({
+        method: 'GET',
+        url: 'http://116.196.86.115/sessions/' + $scope.sessionId,
       }).then(function(response) {
-        console.log(response.data)
-        $scope.sessionId = response.data.session_id;
+        $scope.setSessionState(response.data.ready);
+
+        if (response.data.created_at) {
+          $scope.expiresAt = moment(response.data.expires_at);
+          setInterval(function() {
+            $scope.ttl = moment.utc($scope.expiresAt.diff(moment())).format('HH:mm:ss');
+            $scope.$apply();
+          }, 1000);
+        }
+        var socket = io('http://116.196.86.115',{ path: '/sessions/' + sessionId + '/ws' });
+
+        socket.on('session ready', function(ready) {
+          $scope.setSessionState(ready);
+        });
+
+        socket.on('session builder out', function(data) {
+          $scope.builderTerminal.write(data);
+        });
+
+        socket.on('terminal out', function(name, data) {
+          var instance = $scope.idx[name];
+
+          if (!instance) {
+            // instance is new and was created from another client, we should add it
+            $scope.upsertInstance({ name: name });
+            instance = $scope.idx[name];
+          }
+          if (!instance.term) {
+            instance.buffer += data;
+          } else {
+            instance.term.write(data);
+          }
+        });
+
+        socket.on('session end', function() {
+          $scope.showAlert('Session timed out!', 'Your session has expired and all of your instances have been deleted.', '#sessionEnd')
+          $scope.isAlive = false;
+        });
+
+        socket.on('viewport', function(rows, cols) {
+        });
+
+        socket.on('new instance', function(name, ip, hostname) {
+          $scope.upsertInstance({ name: name, ip: ip, hostname: hostname });
+          $scope.$apply(function() {
+            if ($scope.instances.length == 1) {
+              $scope.showInstance($scope.instances[0]);
+            }
+          });
+        });
+
+        socket.on('delete instance', function(name) {
+          $scope.removeInstance(name);
+          $scope.$apply();
+        });
+
+        socket.on('viewport resize', function(cols, rows) {
+          // viewport has changed, we need to resize all terminals
+
+          $scope.instances.forEach(function(instance) {
+            instance.term.resize(cols, rows);
+          });
+        });
+
+        socket.on('connect_error', function() {
+          $scope.connected = false;
+        });
+        socket.on('connect', function() {
+          $scope.connected = true;
+        });
+
+        socket.on('instance stats', function(name, mem, cpu, isManager, ports) {
+          $scope.idx[name].mem = mem;
+          $scope.idx[name].cpu = cpu;
+          $scope.idx[name].isManager = isManager;
+          $scope.idx[name].ports = ports;
+          $scope.$apply();
+        });
+
+        $scope.socket = socket;
+
+        var i = response.data;
+        for (var k in i.instances) {
+          var instance = i.instances[k];
+          $scope.instances.push(instance);
+          $scope.idx[instance.name] = instance;
+        }
+
+        // If instance is passed in URL, select it
+        let inst = $scope.idx[$location.hash()];
+        if (inst) $scope.showInstance(inst);
       }, function(response) {
-          $scope.showAlert('Session get', 'get session failed')
-      })
+        if (response.status == 404) {
+          document.write('session not found');
+          return
+        }
+      });
+    }
+
+
+    $http({
+      method: 'POST',
+      url: 'http://116.196.86.115/',
+      data : { ImageName : 'centos' }
+    }).then(function(response) {
+      console.log(response.data)
+      $scope.sessionId = response.data.session_id;
+      $scope.getSession($scope.sessionId)
+    });
     $scope.instances = [];
     $scope.idx = {};
     $scope.selectedInstance = null;
@@ -114,110 +219,7 @@
       }
     }
 
-    $scope.getSession = function(sessionId) {
-      $http({
-        method: 'GET',
-        url: 'http://116.196.86.115/sessions/' + $scope.sessionId,
-      }).then(function(response) {
-        $scope.setSessionState(response.data.ready);
-
-        if (response.data.created_at) {
-          $scope.expiresAt = moment(response.data.expires_at);
-          setInterval(function() {
-            $scope.ttl = moment.utc($scope.expiresAt.diff(moment())).format('HH:mm:ss');
-            $scope.$apply();
-          }, 1000);
-        }
-        var socket = io({ path: 'http://116.196.86.115/sessions/' + sessionId + '/ws' });
-
-        socket.on('session ready', function(ready) {
-          $scope.setSessionState(ready);
-        });
-
-        socket.on('session builder out', function(data) {
-          $scope.builderTerminal.write(data);
-        });
-
-        socket.on('terminal out', function(name, data) {
-          var instance = $scope.idx[name];
-
-          if (!instance) {
-            // instance is new and was created from another client, we should add it
-            $scope.upsertInstance({ name: name });
-            instance = $scope.idx[name];
-          }
-          if (!instance.term) {
-            instance.buffer += data;
-          } else {
-            instance.term.write(data);
-          }
-        });
-
-        socket.on('session end', function() {
-          $scope.showAlert('Session timed out!', 'Your session has expired and all of your instances have been deleted.', '#sessionEnd')
-          $scope.isAlive = false;
-        });
-
-        socket.on('viewport', function(rows, cols) {
-        });
-
-        socket.on('new instance', function(name, ip, hostname) {
-          $scope.upsertInstance({ name: name, ip: ip, hostname: hostname });
-          $scope.$apply(function() {
-            if ($scope.instances.length == 1) {
-              $scope.showInstance($scope.instances[0]);
-            }
-          });
-        });
-
-        socket.on('delete instance', function(name) {
-          $scope.removeInstance(name);
-          $scope.$apply();
-        });
-
-        socket.on('viewport resize', function(cols, rows) {
-          // viewport has changed, we need to resize all terminals
-
-          $scope.instances.forEach(function(instance) {
-            instance.term.resize(cols, rows);
-          });
-        });
-
-        socket.on('connect_error', function() {
-          $scope.connected = false;
-        });
-        socket.on('connect', function() {
-          $scope.connected = true;
-        });
-
-        socket.on('instance stats', function(name, mem, cpu, isManager, ports) {
-          $scope.idx[name].mem = mem;
-          $scope.idx[name].cpu = cpu;
-          $scope.idx[name].isManager = isManager;
-          $scope.idx[name].ports = ports;
-          $scope.$apply();
-        });
-
-        $scope.socket = socket;
-
-        var i = response.data;
-        for (var k in i.instances) {
-          var instance = i.instances[k];
-          $scope.instances.push(instance);
-          $scope.idx[instance.name] = instance;
-        }
-
-        // If instance is passed in URL, select it
-        let inst = $scope.idx[$location.hash()];
-        if (inst) $scope.showInstance(inst);
-      }, function(response) {
-        if (response.status == 404) {
-          document.write('session not found');
-          return
-        }
-      });
-    }
-
+    
     $scope.getProxyUrl = function(instance, port) {
       var url = 'http://pwd' + instance.ip.replace(/\./g, '-') + '-' + port + '.' + '116.196.86.115';
 
@@ -268,7 +270,7 @@
       });
     }
 
-    $scope.getSession($scope.sessionId);
+    // $scope.getSession($scope.sessionId);
 
     function createTerminal(instance, cb) {
       if (instance.term) {

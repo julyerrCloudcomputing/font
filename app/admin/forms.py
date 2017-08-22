@@ -19,6 +19,6 @@ class ExperimentForm(FlaskForm):
     content = TextAreaField('Content',default = 'please edit the content')
     courseName = QuerySelectField(query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
                                   get_label="name")
-    containerName = QuerySelectField(query_factory=lambda: Container.query.filter_by(Container.name.like('%'+courseName+'%')).all(),
+    containerName = QuerySelectField(query_factory=lambda: Container.query.filter(Container.name.like('%'+courseName+'%')).all(),
                             get_label="name")
     submit = SubmitField('Submit')

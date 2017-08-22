@@ -52,6 +52,6 @@ def selectCourse():
 @home.route('/experiment/<string:name>', methods=['GET', 'POST'])
 @login_required
 def experiment(name):
-	experiment = Experiment.query.filter_by(name=name)
+	experiment = Experiment.query.filter_by(name=name).first()
 	return render_template('pwd/index.html',experiment=experiment,title='terminal online')
 	
