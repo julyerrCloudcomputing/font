@@ -9,6 +9,7 @@ class Teacher(UserMixin,db.Model):
     __tablename__ = 'teachers'
 
     name = db.Column(db.String(60), nullable=False,primary_key=True)
+    realname = db.Column(db.String(30), nullable=False)
     password_hash = db.Column(db.String(128),nullable=False)
     isTeacher = db.Column(db.Boolean(),default=True)
     courses = db.relationship('Course', backref='teachers',
@@ -48,6 +49,7 @@ class Student(UserMixin,db.Model):
     __tablename__ = 'students'
 
     name = db.Column(db.String(60), nullable=False,primary_key=True)
+    realname = db.Column(db.String(30), nullable=False)
     password_hash = db.Column(db.String(128),nullable=False)
     isTeacher = db.Column(db.Boolean(),default=False)
     courses = db.relationship('Course',secondary=registrations,  

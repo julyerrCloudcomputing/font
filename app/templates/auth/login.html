@@ -1,10 +1,89 @@
-{% import "bootstrap/utils.html" as utils %} {% import "bootstrap/wtf.html" as wtf %} {% extends "base.html" %} {% block title %}Login{% endblock %} {% block body %}
-<div class="content-section">
-    <br/> {{ utils.flashed_messages() }}
-    <br/>
-    <div class="center">
-        <h1 class="text-center">Login to your account</h1>
-        <br/> {{ wtf.quick_form(form) }}
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Login{% endblock title %}
+    {% block metas %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% endblock metas %}
+    {% block styles %}
+    {{ super() }}
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
+    {% endblock styles %}
+
+  {% block page_content %}
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">IMOOP</h3>
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="#">Login</a>
+                <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                <a class="nav-link" href="#">Contact</a>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading">请先登录</h1>
+
+            <p class="lead">
+              <form action="" method="post" class="form">
+              {{ form.csrf_token }}
+              <div class="form-group  required">
+              {{ form.name.label(class="control-label") }}
+              {{ form.name(class="form-control", required=True, placeholder="Username") }}
+              </div>
+              <div class="form-group  required">
+              {{ form.password.label(class="control-label") }}
+              {{ form.password(class="form-control", required=True, placeholder="Password") }}
+              </div>
+              <div class="checkbox">
+                  <label>
+              {{ form.is_teacher() }}
+                  教师帐号登录
+                  </label>
+              </div>
+              {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+          </form>
+
+          </div>
+
+          <div class="mastfoot">
+            <p class="lead"><br>还没有帐号？<a href="{{ url_for('auth.register') }}">注册一个</a></p>
+            <div class="inner">
+              <p>HDU IMOOP for HDU, by <a href="#">&copy;cloudcomputingZY</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+        {#{% block flashed_messages %}
+        {{ super() }}
+        {% endblock flashed_messages %}#}
+
+      </div>
+
     </div>
-</div>
-{% endblock %}
+{% endblock page_content %}
+
+  {% block scripts %}
+  {{ super() }}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="{{ url_for('static', filename='jquery-3.js') }}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{{ url_for('static', filename='popper.js') }}"></script>-->
+  {% endblock scripts %}
