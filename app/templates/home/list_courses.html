@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block metas %}
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -35,7 +35,7 @@
             <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
 				<a class="dropdown-item" href="#">已选课程</a>
                 <a class="dropdown-item" href="{{ url_for('home.selectCourseForm') }}">我要选课</a>
-				<a class="dropdown-item" href="#">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('home.update_infos') }}">修改信息</a>
 				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
             </div>
           </li>
@@ -115,7 +115,7 @@ mollis euismod. Donec sed odio dui. </p>
           </div><!--/row-->
         </div><!--/span-->
 
-        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+        <div class="col-6 col-md-3 sidebar-offcanvas" id="mysidebar">
           <div class="list-group">
             <a href="#" class="list-group-item active">Link</a>
             <a href="#" class="list-group-item">Link</a>

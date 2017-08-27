@@ -1,18 +1,14 @@
 # coding=utf-8
 from flask import abort, flash, redirect, render_template, url_for, request
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
 from ..models import Student, Teacher, Experiment, Course
 from . import home
 from .. import db
-
+from ..auth.forms import UpdateForm
+from werkzeug.security import generate_password_hash
 
 # from ..models import Employee
 
-
-@home.route('/')
-def homepage():
-    # form = LoginForm()
-    return redirect(url_for('auth.login'))  # render_template('auth/login.html', form=form)
 
 
 # @home.route('/dashboard', methods=['GET', 'POST'])
@@ -24,10 +20,9 @@ def homepage():
 @home.route('/teacher/dashboard')
 @login_required
 def teacher_dashboard():
-    print(current_user.isTeacher)
     if not current_user.isTeacher:
         abort(403)
-    return render_template('home/teacher_dashboard.html', title='Teacher Dashboard')
+    return render_template('home/teacher_dashboard.html')
 
 
 @home.route('/list_courses', methods=['GET', 'POST'])
@@ -44,7 +39,7 @@ def list_courses():
 @home.route('/selectCourseForm', methods=['GET', 'POST'])
 @login_required
 def selectCourseForm():
-    return render_template('home/select_course.html', name=current_user.realname)
+    return render_template('home/select_course.html')
 
 
 @home.route('/selectCourse', methods=['GET', 'POST'])
@@ -55,9 +50,11 @@ def selectCourse():  # 查询表单提交处理函数
     if course:
         current_user.courses.append(course)
         db.session.commit()
+        flash(u'选课成功')
+        return redirect(url_for('home.list_courses'))
     else:
-        flash("no course set the id ")
-    return redirect(url_for('home.selectCourseForm'))
+        flash("course code invalid.")
+        return redirect(url_for('home.selectCourseForm'))
 
 
 @home.route('/experiment/<string:name>', methods=['GET', 'POST'])
@@ -65,3 +62,18 @@ def selectCourse():  # 查询表单提交处理函数
 def experiment(name):
     experiment = Experiment.query.filter_by(name=name).first()
     return render_template('pwd/index.html', experiment=experiment, title='terminal online')
+
+
+@home.route('/update_infos', methods=['GET', 'POST'])
+@login_required
+def update_infos():
+    form = UpdateForm()
+    if form.validate_on_submit():
+        student = Student.query.filter_by(name=current_user.name).first()
+        student.realname = form.realname.data
+        student.password_hash = generate_password_hash(form.password.data)
+        db.session.commit()
+        db.session.close()
+        logout_user()
+        return redirect(url_for('auth.login'))
+    return render_template('home/update_infos.html', form=form)

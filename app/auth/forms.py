@@ -30,5 +30,8 @@ class LoginForm(FlaskForm):
 
 class UpdateForm(FlaskForm):
     realname = StringField(u'姓名', validators=[DataRequired()])
-    password = PasswordField(u'密码', validators=[DataRequired()])
+    password = PasswordField(u'新密码', validators=[
+                            EqualTo('confirm_password'), DataRequired()])
+    confirm_password = PasswordField(u'确认密码')
     submit = SubmitField(u'确认修改')
+

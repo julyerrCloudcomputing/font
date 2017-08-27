@@ -71,3 +71,8 @@ footer {
 #mydropdown{
     margin-left: -40px;
 }
+
+#mysidebar{
+    position: fixed;
+    right: 52px;
+}

@@ -1,9 +1,11 @@
 from flask import abort, flash, redirect, render_template, url_for
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, logout_user
 from . import admin
 from forms import CourseForm, ExperimentForm
 from .. import db
 from ..models import Student,Teacher,Experiment,Course
+from ..auth.forms import UpdateForm
+from werkzeug.security import generate_password_hash
 
 
 
@@ -194,3 +196,20 @@ def ckupload():
     form = ExperimentForm()
     response = form.upload(endpoint=admin)
     return response
+
+
+@admin.route('/update_infos', methods=['GET', 'POST'])
+@login_required
+def update_infos():
+    if not current_user.isTeacher:
+        abort(403)
+    form = UpdateForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(name=current_user.name).first()
+        teacher.realname = form.realname.data
+        teacher.password_hash = form.password.data  # generate_password_hash(form.password.data)
+        db.session.commit()
+        db.session.close()
+        logout_user()
+        return redirect(url_for('auth.login'))
+    return render_template('home/update_infos.html', form=form)
