@@ -1,3 +1,4 @@
+# coding=utf-8
 import os, random, datetime
 
 from flask import make_response, current_app, request, url_for
@@ -65,9 +66,9 @@ class CKEditor(object):
 class ExperimentForm(FlaskForm, CKEditor):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    content = TextAreaField('Content')
-    courseName = QuerySelectField(query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
+    content = TextAreaField(u'实验指导')
+    courseName = QuerySelectField(u'实验名称', query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
                                   get_label="name")
-    containerName = QuerySelectField(query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
+    containerName = QuerySelectField(u'所需镜像', query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
                             get_label="name")
-    submit = SubmitField('Submit')
+    submit = SubmitField(u'提交')

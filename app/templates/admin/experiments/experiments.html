@@ -39,10 +39,10 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.list_courses') }}">我的课程</a>
+              <a class="nav-link" href="{{ url_for('home.teacher_dashboard') }}">所有学生名单</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('home.teacher_dashboard') }}">学生名单</a>
+              <a class="nav-link" href="{{ url_for('admin.list_courses') }}">我的课程</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="">我的实验 <span class="sr-only">(current)</span></a>
@@ -50,7 +50,48 @@
           </ul>
         </nav>
 
-
+          <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+              <h1>您拥有的实验</h1>
+              <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="15%">实验名称</th>
+                    <th width="25%">实验简介</th>
+                    <th width="15%">所属课程</th>
+                    <th width="15%">镜像名</th>
+                    <th width="5%">修改</th>
+                    <th width="5%">删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for experiment in experiments %}
+                <tr>
+                    <td> {{ experiment.name }}</td>
+                    <td>
+                        {{ experiment.description }}
+                    </td>
+                    <td> {{ experiment.courseName }}</td>
+                    <td>
+                       {{ experiment.containerName }}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.edit_experiment', name=experiment.name) }}" class="">
+                             Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.delete_experiment', name=experiment.name) }}" class="">
+                             Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+                  <a href="{{ url_for('admin.add_experiment') }}" class="btn btn-outline-success my-2 my-sm-0">增加实验</a>
+              </div>
+          </main>
       </div>
     </div>
 {% endblock page_content %}

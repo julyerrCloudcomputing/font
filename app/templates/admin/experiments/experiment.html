@@ -1,72 +1,46 @@
-{% import "bootstrap/wtf.html" as wtf %} {% extends "base.html" %}
-{% block title %}
-{% if add_experiment %}
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block page_content %}
+<div class="container">
+<form action="" method="post" class="form-signin">
+  {{ form.csrf_token }}
+    <h2 class="form-signin-heading">
+    {% if add_experiment %}
     Add experiment
-{% else %}
+    {% else %}
     Edit experiment
-{% endif %}
-{% endblock title %}
+    {% endif %}
+    </h2>
 
-{% block body %}
-<div class="content-section">
-    <div class="outer">
-        <div class="middle">
-            <div class="inner">
-                <div class="center">
-                    {% if add_experiment %}
-                    <h1>Add experiment</h1>
-                    {% else %}
-                    <h1>Edit experiment</h1>
-                    {% endif %}
-                    <br/>
+  {{ form.name(class="form-control", required=True, placeholder="实验名称") }}
 
-                        <form action="" method="post" class="form">
-                      {{ form.csrf_token }}
-                      <div class="form-group  required">
-                      {{ form.name.label(class="control-label") }}
-                      {{ form.name(class="form-control", required=True) }}
-                      </div>
-                      <div class="form-group">
-                      {{ form.description.label(class="control-label") }}
-                      {{ form.description(class="form-control", required=True) }}
-                      </div>
-                        <div class="form-group  required">
-                      {{ form.courseName.label(class="control-label") }}
-                      {{ form.courseName(class="form-control", required=True, placeholder="Password") }}
-                      </div>
-                        <div class="form-group">
-                      {{ form.containerName.label(class="control-label") }}
-                      {{ form.containerName(class="form-control", required=True, placeholder="Password") }}
-                      </div>
+  {{ form.description(class="form-control", required=True, placeholder="实验简介") }}
 
-                            <div class="form-group">
-                          {{ form.content.label(class="control-label") }}
-                          {{ form.content(class="ckeditor") }}
-                        <script type="text/javascript">
-                           CKEDITOR.replace(
-                               "content", {
-                                   filebrowserUploadUrl: '/admin/experiments/ckupload/'
-                               }
-                           );</script>
-                        </div>
+  {{ form.courseName.label(class="control-label") }}
+  {{ form.courseName(class="form-control", required=True, placeholder="实验名称") }}
 
+  {{ form.containerName.label(class="control-label") }}
+  {{ form.containerName(class="form-control", required=True, placeholder="所需镜像") }}
 
-                      {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
-                        </form>
+      {{ form.content.label(class="control-label") }}<br/>
+      {{ form.content(class="ckeditor control-label") }}
+    <script type="text/javascript">
+       CKEDITOR.replace(
+           "content", {
+               filebrowserUploadUrl: '/admin/experiments/ckupload/'
+           }
+       );</script>
 
-
-                    {#{{ wtf.quick_form(form) }}#}
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                </div>
-            </div>
-        </div>
-    </div>
+  {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+</form>
 </div>
-{% endblock body%}
-
-
-
+{% endblock page_content %}

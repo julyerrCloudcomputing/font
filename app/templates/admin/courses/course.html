@@ -8,21 +8,40 @@
     {% endif %}
 {% endblock %}
 
-{% block body %}
-<div class="content-section">
-    <div class="outer">
-        <div class="middle">
-            <div class="inner">
-                <div class="center">
-                    {% if add_course %}
-                    <h1>Add Course</h1>
-                    {% else %}
-                    <h1>Edit Course</h1>
-                    {% endif %}
-                    <br/> {{ wtf.quick_form(form) }}
-                </div>
-            </div>
-        </div>
-    </div>
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block page_content %}
+<div class="container">
+
+    <form action="" method="POST" class="form-signin">
+          <h2 class="form-signin-heading">
+              {% if add_course %}
+              Add Course
+              {% else %}
+              Edit Course
+              {% endif %}
+          </h2>
+
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+
+
+          {{ form.name(class="form-control", placeholder="课程名称", required=True) }}
+
+
+          {{ form.description(class="form-control", placeholder="课程简介", required=True) }}
+
+
+          {{ form.courseNums(class="form-control", placeholder="选课口令", required=True) }}
+
+          {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+
+      </form>
 </div>
 {% endblock %}

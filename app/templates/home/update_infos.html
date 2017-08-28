@@ -19,6 +19,7 @@
 {% endblock styles %}
 
 {% block navbar %}
+    {% if not current_user.isTeacher %}
     <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -35,17 +36,20 @@
         </ul>
       </div>
     </nav>
+    {% endif %}
 {% endblock navbar %}
 
 {% block page_content %}
    <div class="container">
 
       <form action="" method="POST" class="form-signin">
+          <h2 class="form-signin-heading">Edit an account</h2>
+
           {{ form.csrf_token }}
           {{ form.hidden_tag() }}
 
 
-          {{ form.realname(class="form-control", placeholder="真实姓名", value=current_user.realname, required=True) }}
+          {{ form.realname(class="form-control", placeholder="真实姓名", value=name, required=True) }}
 
 
           {{ form.password(class="form-control", placeholder="新密码", required=True) }}

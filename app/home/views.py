@@ -22,7 +22,8 @@ from werkzeug.security import generate_password_hash
 def teacher_dashboard():
     if not current_user.isTeacher:
         abort(403)
-    return render_template('home/teacher_dashboard.html')
+    students = Student.query.all()
+    return render_template('home/teacher_dashboard.html', students=students)
 
 
 @home.route('/list_courses', methods=['GET', 'POST'])
@@ -76,4 +77,4 @@ def update_infos():
         db.session.close()
         logout_user()
         return redirect(url_for('auth.login'))
-    return render_template('home/update_infos.html', form=form)
+    return render_template('home/update_infos.html', name=current_user.name,form=form)

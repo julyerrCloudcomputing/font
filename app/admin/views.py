@@ -213,3 +213,40 @@ def update_infos():
         logout_user()
         return redirect(url_for('auth.login'))
     return render_template('home/update_infos.html', form=form)
+
+
+@admin.route('/edit_account/delete/<string:name>', methods=['GET', 'POST'])
+@login_required
+def delete_account(name):
+    if not current_user.isTeacher:
+        abort(403)
+    """
+    Assign a department and a role to an experiment
+    """
+
+    student = Student.query.filter_by(name=name).first()
+
+    db.session.delete(student)
+    db.session.commit()
+    flash('You have successfully deleted the account.')
+
+    return redirect(url_for('home.teacher_dashboard'))
+
+@admin.route('/edit_account/edit/<string:name>', methods=['GET', 'POST'])
+@login_required
+def edit_account(name):
+    if not current_user.isTeacher:
+        abort(403)
+    """
+    Edit a experiment
+    """
+    student = Student.query.filter_by(name=name).first()
+    realname = student.realname
+    form = UpdateForm()
+    if form.validate_on_submit():
+        student.realname = form.realname.data
+        student.password_hash = generate_password_hash(form.password.data)
+        db.session.commit()
+        db.session.close()
+        return redirect(url_for('home.teacher_dashboard'))
+    return render_template('home/update_infos.html', name=realname, form=form)
