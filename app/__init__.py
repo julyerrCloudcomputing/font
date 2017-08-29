@@ -5,6 +5,7 @@ from flask import Flask, render_template, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 # local imports
 from config import app_config
 
@@ -30,6 +31,7 @@ def create_app(config_name):
         # app.config.from_pyfile('config.py')
     Bootstrap(app)
     db.init_app(app)
+    moment = Moment(app)
     login_manager.init_app(app)
     login_manager.login_message = "You are not authorised to see this page. Please log in"
     login_manager.login_view = "auth.login"

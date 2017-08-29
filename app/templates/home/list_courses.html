@@ -1,21 +1,144 @@
-{% extends "base.html" %} {% block title %}View Courses{% endblock %} {% block body %}
-<div id="mainwrap">
-    <!-- <img src="../../static/img/avatar.png" id="avatar"> -->
-    <p id="cname">{{current_user.name}} </p>
-    <!-- add the course button -->
-    <form action="{{ url_for('home.selectCourse') }}", method="POST">
-        <input type="text" name="nums">
-        <input type="submit" name="submit">
-    </form>
-    {% if courses %}
-    {% for i in courses %}
-        <ul>{{ i.name }}</ul>
-        {% for j in experimentSet[loop.index0] %}
-             <li><a href="{{ url_for('home.experiment',name=j.name) }}">{{ j.name }}</a></li>
-        {% endfor %}
-    {% endfor %}
-    {% else %}
-    <h1>No course selected yet !</h1>
-    {% endif %}
-</div>
-{% endblock %}
+{% extends "base.html" %}
+
+{% block metas %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+{% endblock metas %}
+
+    {% block title %}{{ super() }}{% endblock title %}
+
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+<!--<link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <!--<li class="nav-item active">-->
+            <!--<a class="nav-link" href="#">已选课程 <span class="sr-only">(current)</span></a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">我要选课</a>-->
+          <!--</li>-->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ name }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="#">已选课程</a>
+                <a class="dropdown-item" href="{{ url_for('home.selectCourseForm') }}">我要选课</a>
+				<a class="dropdown-item" href="#">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
+            </div>
+          </li>
+        </ul>
+        <!--<form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>-->
+      </div>
+    </nav>
+{% endblock navbar %}
+
+{% block page_content %}
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-12 col-md-9">
+          <p class="float-right d-md-none">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>This is an example to show the potential of an offcanvas 
+layout pattern in Bootstrap. Try some responsive-range viewport sizes to
+ see it in action.</p>
+          </div>
+          <div class="row">
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="col-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce
+ dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut 
+fermentum massa justo sit amet risus. Etiam porta sem malesuada magna 
+mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+          </div><!--/row-->
+        </div><!--/span-->
+
+        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>© Company 2017</p>
+      </footer>
+
+    </div><!--/.container-->
+
+{% endblock page_content %}
+
+

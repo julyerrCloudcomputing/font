@@ -1,4 +1,11 @@
-{% import "bootstrap/utils.html" as utils %} {% extends "base.html" %} {% block title %}Courses{% endblock %} {% block body %}
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+
+{% block title %}
+    Courses
+{% endblock %}
+
+{% block body %}
 <div class="content-section">
     <div class="outer">
         <div class="middle">
@@ -44,7 +51,8 @@
                     {% else %}
                     <div style="text-align: center">
                         <h3> No courses have been added. </h3>
-                        <hr class="intro-divider"> {% endif %}
+                        <hr class="intro-divider">
+                {% endif %}
                         <a href="{{ url_for('admin.add_course') }}" class="btn btn-default btn-lg">
                             <i class="fa fa-plus"></i> Add Course
                         </a>

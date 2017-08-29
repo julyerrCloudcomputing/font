@@ -1,3 +1,6 @@
+import os, random, datetime
+
+from flask import make_response, current_app, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField,TextAreaField
 from wtforms.validators import DataRequired
@@ -13,12 +16,58 @@ class CourseForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class ExperimentForm(FlaskForm):
+class CKEditor(object):
+    def __init__(self):
+        pass
+
+    def gen_rnd_filename(self):
+        """generate a random filename"""
+        filename_prefix = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        return "%s%s" % (filename_prefix, str(random.randrange(1000, 10000)))
+
+    def upload(self, endpoint=current_app):
+        """img or file upload methods"""
+        error = ''
+        url = ''
+        callback = request.args.get("CKEditorFuncNum")
+
+        if request.method == 'POST' and 'upload' in request.files:
+            # /static/upload
+            fileobj = request.files['upload']
+            fname, fext = os.path.splitext(fileobj.filename)
+            rnd_name = '%s%s' % (self.gen_rnd_filename(), fext)
+            filepath = os.path.join(endpoint.static_folder, 'upload', rnd_name)
+
+            dirname = os.path.dirname(filepath)
+            if not os.path.exists(dirname):
+                try:
+                    os.makedirs(dirname)
+                except:
+                    error = 'ERROR_CREATE_DIR'
+            elif not os.access(dirname, os.W_OK):
+                    error = 'ERROR_DIR_NOT_WRITEABLE'
+            if not error:
+                fileobj.save(filepath)
+                url = url_for('admin.static', filename='%s/%s' % ('upload', rnd_name))
+        else:
+            error = 'post error'
+
+        res = """
+                <script type="text/javascript">
+                window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');
+                </script>
+             """ % (callback, url, error)
+
+        response = make_response(res)
+        response.headers["Content-Type"] = "text/html"
+        return response
+
+class ExperimentForm(FlaskForm, CKEditor):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    content = TextAreaField('Content',default = 'please edit the content')
+    content = TextAreaField('Content')
     courseName = QuerySelectField(query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
                                   get_label="name")
-    containerName = QuerySelectField(query_factory=lambda: Container.query.filter(Container.name.like('%'+courseName+'%')).all(),
+    containerName = QuerySelectField(query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
                             get_label="name")
     submit = SubmitField('Submit')

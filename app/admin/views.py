@@ -23,9 +23,11 @@ def edit_course(name):
     Edit a course
     """
 
+#############################################################
     if not current_user.isTeacher:
         abort(403)    
     add_course = False
+#############################################################
 
     course = Course.query.filter_by(name=name).first()
     form = CourseForm(obj=course)
@@ -186,3 +188,9 @@ def add_experiment():
     return render_template('admin/experiments/experiment.html', add_experiment=add_experiment,
                            form=form, title="Add experiment")
 
+@admin.route('/experiments/ckupload/', methods=['POST', 'OPTIONS'])
+@login_required
+def ckupload():
+    form = ExperimentForm()
+    response = form.upload(endpoint=admin)
+    return response

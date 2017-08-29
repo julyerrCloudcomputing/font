@@ -1,4 +1,14 @@
-{% import "bootstrap/wtf.html" as wtf %} {% extends "base.html" %} {% block title %} {% if add_course %} Add Course {% else %} Edit course {% endif %} {% endblock %} {% block body %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_course %}
+        Add Course
+    {% else %}
+        Edit course
+    {% endif %}
+{% endblock %}
+
+{% block body %}
 <div class="content-section">
     <div class="outer">
         <div class="middle">
