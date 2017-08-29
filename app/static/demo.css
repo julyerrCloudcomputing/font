@@ -474,6 +474,8 @@ a { /*color:#FFF;*/ text-decoration:none; }
     color: #222;
 }
 
-.page_right{
-    height: 68px;
+.myalert{
+    position: fixed;
+    top: 10px;
+    z-index: 1000;
 }

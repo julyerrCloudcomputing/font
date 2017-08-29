@@ -35,6 +35,7 @@ def list_courses():
         experiments = Experiment.query.filter_by(courseName=i.name).all()
         experimentSet.append(experiments)
     # return render_template('home/list_courses.html', title='Student Classes', courses=courses, experimentSet=experimentSet)
+    print '\n\n', type(courses), '\n\n'
     return render_template('home/list_courses.html', courses=courses, experimentSet=experimentSet, name=current_user.realname)
 
 @home.route('/selectCourseForm', methods=['GET', 'POST'])

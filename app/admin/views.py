@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, logout_user
 from . import admin
@@ -6,7 +7,7 @@ from .. import db
 from ..models import Student,Teacher,Experiment,Course
 from ..auth.forms import UpdateForm
 from werkzeug.security import generate_password_hash
-
+import string, random
 
 
 @admin.route('/courses', methods=['GET', 'POST'])
@@ -34,6 +35,9 @@ def edit_course(name):
     course = Course.query.filter_by(name=name).first()
     form = CourseForm(obj=course)
     if form.validate_on_submit():
+        if Course.query.filter_by(form.courseNums.data).first().name is not name:
+            flash(u'选课口令已存在，请更改')
+            return redirect(url_for('admin.edit_course', name=name))
         course.name = form.name.data
         course.description = form.description.data
         course.courseNums = form.courseNums.data
@@ -48,7 +52,7 @@ def edit_course(name):
     course.courseNums = form.courseNums.data
     return render_template('admin/courses/course.html', action="Edit",
                            add_course=add_course, form=form,
-                           course=course, title="Edit Course")
+                           course=course, title="Edit Course", code=course.courseNums)
 
 @admin.route('/courses/add', methods=['GET', 'POST'])
 @login_required
@@ -56,6 +60,7 @@ def add_course():
     if not current_user.isTeacher:
         abort(403)    
     add_course = True
+    courseNums = ''.join(random.sample(string.ascii_letters+string.digits, 8))
     form = CourseForm()
     if form.validate_on_submit():
         course = Course(name=form.name.data,
@@ -76,7 +81,7 @@ def add_course():
     # load course template
     return render_template('admin/courses/course.html',
                            add_course=add_course, form=form,
-                           title="Add Course")    
+                           title="Add Course", code=courseNums)
 
 @admin.route('/courses/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
@@ -182,6 +187,7 @@ def add_experiment():
             flash('You have successfully added the experiment.')
         except:
             flash('The experiment has already exists.')
+            return redirect(url_for('admin.add_experiment'))
             
 
         # redirect to the experiments page

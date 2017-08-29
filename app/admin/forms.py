@@ -13,7 +13,7 @@ import uuid
 class CourseForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    courseNums = StringField('CourseNums',default=uuid.uuid1() )
+    courseNums = StringField('CourseNums')
     submit = SubmitField('Submit')
 
 
@@ -64,10 +64,10 @@ class CKEditor(object):
         return response
 
 class ExperimentForm(FlaskForm, CKEditor):
-    name = StringField('Name', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
+    name = StringField(u'实验名称', validators=[DataRequired()])
+    description = StringField(u'实验简介', validators=[DataRequired()])
     content = TextAreaField(u'实验指导')
-    courseName = QuerySelectField(u'实验名称', query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
+    courseName = QuerySelectField(u'所属课程', query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
                                   get_label="name")
     containerName = QuerySelectField(u'所需镜像', query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
                             get_label="name")

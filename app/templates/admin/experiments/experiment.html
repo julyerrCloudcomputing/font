@@ -21,16 +21,18 @@
     {% endif %}
     </h2>
 
-  {{ form.name(class="form-control", required=True, placeholder="实验名称") }}
-
-  {{ form.description(class="form-control", required=True, placeholder="实验简介") }}
+    {{ form.name.label(class="control-label") }}
+  {{ form.name(class="form-control", required=True) }}
+    {{ form.description.label(class="control-label") }}
+  {{ form.description(class="form-control", required=True) }}
 
   {{ form.courseName.label(class="control-label") }}
-  {{ form.courseName(class="form-control", required=True, placeholder="实验名称") }}
+  {{ form.courseName(class="form-control", required=True, placeholder="所属课程", style="height:43px") }}
 
   {{ form.containerName.label(class="control-label") }}
-  {{ form.containerName(class="form-control", required=True, placeholder="所需镜像") }}
+  {{ form.containerName(class="form-control", required=True, placeholder="所需镜像", style="height:43px") }}
 
+    <div class="myckeditor">
       {{ form.content.label(class="control-label") }}<br/>
       {{ form.content(class="ckeditor control-label") }}
     <script type="text/javascript">
@@ -39,8 +41,13 @@
                filebrowserUploadUrl: '/admin/experiments/ckupload/'
            }
        );</script>
-
+    </div>
+    <br/>
   {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
 </form>
+    <div class="col-md-2">
+        <a href="{{ url_for('admin.list_experiments') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">返回</a>
+    </div>
+
 </div>
 {% endblock page_content %}
