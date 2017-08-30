@@ -1,0 +1,51 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}
+    {% if add_course %}
+        Add Course
+    {% else %}
+        Edit course
+    {% endif %}
+{% endblock %}
+
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block page_content %}
+<div class="container">
+
+    <form action="" method="POST" class="form-signin">
+          <h2 class="form-signin-heading">
+              {% if add_course %}
+              Add Course
+              {% else %}
+              Edit Course
+              {% endif %}
+          </h2>
+
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+
+
+          {{ form.name(class="form-control", placeholder="课程名称", required=True) }}
+
+
+          {{ form.description(class="form-control", placeholder="课程简介", required=True) }}
+
+
+          {{ form.courseNums(class="form-control", placeholder="选课口令", required=True, value=code) }}
+
+          {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+
+      </form>
+
+    <div class="col-md-2">
+        <a href="{{ url_for('admin.list_courses') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">返回</a>
+    </div>
+</div>
+{% endblock %}

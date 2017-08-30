@@ -1,0 +1,14 @@
+修改数据库中containers.name, students.realname, teachers.realname列的字符编码为utf8，使其适用于中文
+Example: alter table students modify realname  varchar(30) character set utf8 not null;
+
+修改courses, experiments, registrations表的字符编码为utf8，使其支持中文
+Example: set foreign_key_checks=0; #取消mysql外键约束
+		alter table courses convert to character set utf8;
+		set foreign_key_checks=1;
+		
+修改了默认的选课口令为8位，且每次刷新页面都会不同
+		
+还有一些bug和不足：
+	教师删除课程，实验还在
+	experiments.name和courses.name作为主键不合适，courses表可以考虑将选课口令作为主键
+	教师修改课程信息时，若修改了选课口令码，与数据库中已有courseNums重复时，没有合适的提醒
