@@ -21,7 +21,7 @@ def register():
         # add employee to the database
         db.session.add(student)
         db.session.commit()
-        flash('You have successfully registered! You may now login.')
+        flash(u'注册成功')
 
         # redirect to the login page
         return redirect(url_for('auth.login'))
@@ -105,7 +105,7 @@ def login():
                 login_user(teacher)
                 return redirect(url_for('home.teacher_dashboard'))
             else:
-                flash('Invalid email or password.')
+                flash(u'密码不正确')
 
         else:
             student = Student.query.filter_by(name=form.name.data).first()
@@ -114,7 +114,7 @@ def login():
                 login_user(student)
                 return redirect(url_for('home.list_courses'))
             else:
-                flash('Invalid email or password.')
+                flash(u'密码不正确')
     return render_template('auth/login.html', form=form)
 
 
@@ -126,7 +126,7 @@ def logout():
     Log an employee out through the logout link
     """
     logout_user()
-    flash('You have successfully been logged out.')
+    # flash('You have successfully been logged out.')
 
     # redirect to the login page
     return redirect(url_for('auth.login'))

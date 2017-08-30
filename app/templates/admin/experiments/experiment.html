@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block styles %}
-    {{ super() }}
+    <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
@@ -9,9 +9,29 @@
     <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
 {% endblock styles %}
 
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">{{ current_user.realname }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="{{ url_for('admin.update_infos') }}">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('admin.list_experiments') }}">退出编辑</a>
+                <a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+
 {% block page_content %}
 <div class="container">
-<form action="" method="post" class="form-signin">
+<form action="" method="post" class="">
   {{ form.csrf_token }}
     <h2 class="form-signin-heading">
     {% if add_experiment %}
@@ -20,18 +40,27 @@
     Edit experiment
     {% endif %}
     </h2>
-
+<div class="form-row">
+    <div class="form-group col-md-3">
     {{ form.name.label(class="control-label") }}
   {{ form.name(class="form-control", required=True) }}
+    </div>
+    <div class="form-group col-md-3">
     {{ form.description.label(class="control-label") }}
   {{ form.description(class="form-control", required=True) }}
+    </div>
+</div>
 
+<div class="form-row">
+    <div class="form-group col-md-3">
   {{ form.courseName.label(class="control-label") }}
   {{ form.courseName(class="form-control", required=True, placeholder="所属课程", style="height:43px") }}
-
+    </div>
+    <div class="form-group col-md-3">
   {{ form.containerName.label(class="control-label") }}
-  {{ form.containerName(class="form-control", required=True, placeholder="所需镜像", style="height:43px") }}
-
+  {{ form.containerName(class="form-control", required=True, style="height:43px") }}
+    </div>
+</div>
     <div class="myckeditor">
       {{ form.content.label(class="control-label") }}<br/>
       {{ form.content(class="ckeditor control-label") }}
@@ -43,11 +72,15 @@
        );</script>
     </div>
     <br/>
-  {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
-</form>
-    <div class="col-md-2">
-        <a href="{{ url_for('admin.list_experiments') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">返回</a>
+    <div class="form-row">
+        <div class="col-md-3">
+  {{ form.submit(class="btn btn-outline-success my-2 my-sm-0", style="width:270px;") }}
+        </div>
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.list_experiments') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">这是一个链接</a>
+        </div>
     </div>
+</form>
 
 </div>
 {% endblock page_content %}

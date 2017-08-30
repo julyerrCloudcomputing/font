@@ -55,7 +55,7 @@ def selectCourse():  # 查询表单提交处理函数
         flash(u'选课成功')
         return redirect(url_for('home.list_courses'))
     else:
-        flash("course code invalid.")
+        flash(u'选课码无效')
         return redirect(url_for('home.selectCourseForm'))
 
 

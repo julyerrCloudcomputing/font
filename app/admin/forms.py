@@ -69,6 +69,7 @@ class ExperimentForm(FlaskForm, CKEditor):
     content = TextAreaField(u'实验指导')
     courseName = QuerySelectField(u'所属课程', query_factory=lambda: Course.query.filter_by(teacherName=current_user.name).all(),
                                   get_label="name")
-    containerName = QuerySelectField(u'所需镜像', query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
-                            get_label="name")
+    containerName = StringField(u'所需镜像', validators=[DataRequired()])
+    # containerName = QuerySelectField(u'所需镜像', query_factory=lambda: Container.query.filter(Container.name.like('%'+'centos'+'%')).all(),
+    #                         get_label="name")
     submit = SubmitField(u'提交')

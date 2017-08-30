@@ -473,9 +473,3 @@ a { /*color:#FFF;*/ text-decoration:none; }
     line-height: 34px;
     color: #222;
 }
-
-.myalert{
-    position: fixed;
-    top: 10px;
-    z-index: 1000;
-}

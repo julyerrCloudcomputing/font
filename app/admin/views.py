@@ -42,7 +42,7 @@ def edit_course(name):
         course.description = form.description.data
         course.courseNums = form.courseNums.data
         db.session.commit()
-        flash('You have successfully edited the course.')
+        flash(u'课程信息修改成功')
 
         # redirect to the courses page
         return redirect(url_for('admin.list_courses'))
@@ -70,10 +70,10 @@ def add_course():
             # add course to the database
             db.session.add(course)
             db.session.commit()
-            flash('You have successfully added a new course.')
+            flash(u'成功创建一门课程')
         except:
             # in case course name already exists
-            flash('Error: course name already exists or uuid should different .')
+            flash(u'创建课程失败，可能是选课口令与已存在的课程相同')
 
         # redirect to courses page
         return redirect(url_for('admin.list_courses'))
@@ -95,7 +95,7 @@ def delete_course(name):
     course = Course.query.filter_by(name=name).first()
     db.session.delete(course)
     db.session.commit()
-    flash('You have successfully deleted the course.')
+    flash(u'成功删除该课程')
 
     # redirect to the courses page
     return redirect(url_for('admin.list_courses'))
@@ -129,7 +129,7 @@ def delete_experiment(name):
 
     db.session.delete(experiment)
     db.session.commit()
-    flash('You have successfully deleted the account.')
+    flash(u'成功删除实验')
 
     return redirect(url_for('admin.list_experiments'))
 
@@ -151,9 +151,9 @@ def edit_experiment(name):
         experiment.description = form.description.data
         experiment.content = form.content.data
         experiment.courseName = form.courseName.data
-        experiment.containerName = form.containerName.data.name
+        experiment.containerName = form.containerName.data# .name
         db.session.commit()
-        flash('You have successfully edited the experiment.')
+        flash(u'实验修改成功')
 
         # redirect to the experiments page
         return redirect(url_for('admin.list_experiments'))
@@ -180,13 +180,13 @@ def add_experiment():
     form = ExperimentForm()
     if form.validate_on_submit():
         experiment = Experiment(name=form.name.data,description=form.description.data,
-            content=form.content.data,courseName=form.courseName.data,containerName=form.containerName.data.name)
+            content=form.content.data,courseName=form.courseName.data,containerName=form.containerName.data)  # .name)
         try:
             db.session.add(experiment)
             db.session.commit()
-            flash('You have successfully added the experiment.')
+            flash(u'实验创建完成')
         except:
-            flash('The experiment has already exists.')
+            flash(u'实验创建失败')
             return redirect(url_for('admin.add_experiment'))
             
 
@@ -234,7 +234,7 @@ def delete_account(name):
 
     db.session.delete(student)
     db.session.commit()
-    flash('You have successfully deleted the account.')
+    flash(u'成功删除学生账户')
 
     return redirect(url_for('home.teacher_dashboard'))
 
@@ -254,5 +254,6 @@ def edit_account(name):
         student.password_hash = generate_password_hash(form.password.data)
         db.session.commit()
         db.session.close()
+        flash(u'修改成功')
         return redirect(url_for('home.teacher_dashboard'))
     return render_template('home/update_infos.html', name=realname, form=form)

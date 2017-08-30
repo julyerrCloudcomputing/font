@@ -44,16 +44,12 @@ input[type="submit"]{
     cursor: pointer;
 }
 
-.myckeditor{
-    margin-left: -150px;
-}
-
 .myfixedbutton{
-    position: fixed;
-    top: 40px;
+    /*position: fixed;
+    top: 40px;*/
     text-decoration: none;
     background-color: #28a745;
-    border-radius: 32px;
+    border-radius: .25rem;
     border: none;
     color: #fff;
 }

@@ -16,6 +16,27 @@
     <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
 {% endblock styles %}
 
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">{{ current_user.realname }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="{{ url_for('admin.update_infos') }}">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('admin.list_courses') }}">退出编辑</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+
+
 {% block page_content %}
 <div class="container">
 
@@ -43,9 +64,5 @@
           {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
 
       </form>
-
-    <div class="col-md-2">
-        <a href="{{ url_for('admin.list_courses') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">返回</a>
-    </div>
 </div>
 {% endblock %}
