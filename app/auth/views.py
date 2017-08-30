@@ -1,6 +1,6 @@
 # coding:utf-8
-from flask import flash, redirect, render_template, url_for
-from flask_login import login_required, login_user, logout_user
+from flask import flash, redirect, render_template, url_for, session
+from flask_login import login_required, login_user, logout_user, current_user
 
 from . import auth
 from forms import LoginForm, RegistrationForm
@@ -15,13 +15,13 @@ def register():
         student = Student.query.filter_by(name=form.name.data).first()
         if student:
             flash(u'帐号'+form.name.data+u'已存在，无法再次创建')
-            return redirect(url_for('home.homepage'))
+            return redirect(url_for('auth.login'))
         student = Student(name=form.name.data, realname=form.realname.data,
                           password=form.password.data, isTeacher=0)
         # add employee to the database
         db.session.add(student)
         db.session.commit()
-        flash('You have successfully registered! You may now login.')
+        flash(u'注册成功')
 
         # redirect to the login page
         return redirect(url_for('auth.login'))
@@ -87,12 +87,15 @@ def register():
 #     # load login template
 #     return render_template('auth/login.html', form=form, title='Login')
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/', methods=['GET', 'POST'])
 def login():
-    """
-    Handle requests to the /login route
-    Log an employee in through the login form
-    """
+    if 'user_id' in session.keys():
+        if current_user.isTeacher:
+            return redirect(url_for('admin.list_courses'))
+        else:
+            return redirect(url_for('home.list_courses'))
+    # if current_user:
+    #     return redirect(url_for('home.list_courses'))
     form = LoginForm()
     if form.validate_on_submit():
         if form.is_teacher.data:
@@ -102,7 +105,7 @@ def login():
                 login_user(teacher)
                 return redirect(url_for('home.teacher_dashboard'))
             else:
-                flash('Invalid email or password.')
+                flash(u'密码不正确')
 
         else:
             student = Student.query.filter_by(name=form.name.data).first()
@@ -111,7 +114,7 @@ def login():
                 login_user(student)
                 return redirect(url_for('home.list_courses'))
             else:
-                flash('Invalid email or password.')
+                flash(u'密码不正确')
     return render_template('auth/login.html', form=form)
 
 
@@ -123,7 +126,7 @@ def logout():
     Log an employee out through the logout link
     """
     logout_user()
-    flash('You have successfully been logged out.')
+    # flash('You have successfully been logged out.')
 
     # redirect to the login page
-    return redirect(url_for('home.homepage'))
+    return redirect(url_for('auth.login'))

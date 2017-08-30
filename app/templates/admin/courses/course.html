@@ -8,21 +8,61 @@
     {% endif %}
 {% endblock %}
 
-{% block body %}
-<div class="content-section">
-    <div class="outer">
-        <div class="middle">
-            <div class="inner">
-                <div class="center">
-                    {% if add_course %}
-                    <h1>Add Course</h1>
-                    {% else %}
-                    <h1>Edit Course</h1>
-                    {% endif %}
-                    <br/> {{ wtf.quick_form(form) }}
-                </div>
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">{{ current_user.realname }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="{{ url_for('admin.update_infos') }}">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('admin.list_courses') }}">退出编辑</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
             </div>
-        </div>
-    </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+
+
+{% block page_content %}
+<div class="container">
+
+    <form action="" method="POST" class="form-signin">
+          <h2 class="form-signin-heading">
+              {% if add_course %}
+              Add Course
+              {% else %}
+              Edit Course
+              {% endif %}
+          </h2>
+
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+
+
+          {{ form.name(class="form-control", placeholder="课程名称", required=True) }}
+
+
+          {{ form.description(class="form-control", placeholder="课程简介", required=True) }}
+
+
+          {{ form.courseNums(class="form-control", placeholder="选课口令", required=True, value=code) }}
+
+          {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+
+      </form>
 </div>
 {% endblock %}

@@ -1,17 +1,94 @@
-{% extends "base.html" %} {% block title %}Teacher Dashboard{% endblock %} {% block body %}
-<div class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="intro-message">
-                    <h1>Teacher Dashboard</h1>
-                    <br>
-                    <br>
-                    <a href="{{ url_for('admin.list_courses') }}" id="db">Your Courses</a>
-                    </ul>
-                </div>
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block metas %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+{% endblock metas %}
+
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='dashboard.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">{{ current_user.realname }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="{{ url_for('admin.update_infos') }}">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
             </div>
-        </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+{% block page_content %}
+        <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="">所有学生名单 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin.list_courses') }}">我的课程</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin.list_experiments') }}">我的实验</a>
+            </li>
+          </ul>
+        </nav>
+
+        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+          <h1>学生花名册</h1>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>修改信息</th>
+                  <th>删除账号</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for student in students %}
+                <tr>
+                  <td>{{ student.name }}</td>
+                  <td>{{ student.realname }}</td>
+                  <td>
+                      <a href="{{ url_for('admin.edit_account', name=student.name) }}" class="">
+                      Edit
+                      </a>
+                  </td>
+                  <td>
+                      <a href="{{ url_for('admin.delete_account', name=student.name) }}" class="">
+                      Delete
+                      </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
     </div>
-</div>
-{% endblock %}
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{{ url_for('static', filename='content-static/ie10-viewport-bug-workaround.js') }}"></script>
+{% endblock scripts %}

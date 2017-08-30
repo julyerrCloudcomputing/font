@@ -1,9 +1,9 @@
+# coding=utf-8
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.schema import Sequence
 
 from app import db, login_manager
-
 
 class Teacher(UserMixin,db.Model):
     __tablename__ = 'teachers'
@@ -102,7 +102,7 @@ class Course(db.Model):
     experiments = db.relationship('Experiment', backref='courses',
                                 lazy='dynamic')
     def __repr__(self):
-        return '{}'.format(self.name)
+        return self.name.encode('utf-8')
 
 class Experiment(db.Model):
 

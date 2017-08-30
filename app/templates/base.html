@@ -18,24 +18,24 @@
 {% endblock navbar%}
 
 {% block content %}
+        {% for message in get_flashed_messages() %}
+    <div class="myalert row">
+        <div class="col"></div>
+        <div class="col-9 alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        <div class="col"></div>
+    </div>
+        {% endfor %}
 
-    {% block page_content %}{% endblock page_content%}
+
+    {% block page_content %}
+    {% endblock page_content%}
 
 {% endblock content%}
 
-    {#{% block flashed_messages %}
-    <!--<div class="page_right">
-        {% for message in get_flashed_messages() %}
-        <div class="col-12 col-md-9"></div>
-        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-            <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-            </div>
-        </div>
-        {% endfor %}
-    </div>-->
-    {% endblock flashed_messages %}#}
+
 
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -43,4 +43,4 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 {{ super() }}
 {{ moment.include_moment() }}
-{% endblock %}
+{% endblock scripts %}
