@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block metas %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+{% endblock metas %}
+
+    {% block title %}{{ super() }}{% endblock title %}
+
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+<!--<link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <!--<li class="nav-item active">-->
+            <!--<a class="nav-link" href="#">已选课程 <span class="sr-only">(current)</span></a>-->
+          <!--</li>-->
+          <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">我要选课</a>-->
+          <!--</li>-->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ name }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+				<a class="dropdown-item" href="#">已选课程</a>
+                <a class="dropdown-item" href="{{ url_for('home.selectCourseForm') }}">我要选课</a>
+				<a class="dropdown-item" href="{{ url_for('home.update_infos') }}">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
+            </div>
+          </li>
+        </ul>
+        <!--<form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" placeholder="Search" aria-label="Search" type="text">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>-->
+      </div>
+    </nav>
+{% endblock navbar %}
+
+{% block page_content %}
+    <div class="container marketing">
+
+        <div class="jumbotron">
+          <h1 class="display-3">Hdu Online Laboratory!</h1>
+          <br><p class="lead">这是一个在线实验平台，你可以在这里选择相应的实验进行操作。</p>
+          <hr class="my-4">
+          <p></p>
+        </div>
+
+
+      <div class="row">
+          {% if courses.all() %}
+            {% for i in courses %}
+          <div class="col-lg-4">
+              <div class="card">
+                  <h4 class="card-header">{{i.name}}</h4>
+                  <div class="card-body">
+                    <p class="card-text">{{i.description}}</p>
+                  </div>
+                  {% if experimentSet %}
+                  <ul class="list-group list-group-flush">
+                      {% for j in experimentSet[loop.index0] %}
+                      <li class="list-group-item"><a class="btn" href="{{ url_for('home.experiment',name=j.name) }}">{{ j.name }}</a></li>
+                      {% endfor %}
+                  </ul>
+                  {% endif %}
+              </div>
+          </div>
+          {% endfor %}
+
+          {% endif %}
+          <div class="col-lg-4">
+              <div class="card">
+                  <h4 class="card-header">选课</h4>
+                  <div class="card-body">
+                    <p class="card-text">你可以点击下面的“我要选课”按钮，输入选课口令即可选择相应课程</p>
+                    <p><a class="btn btn-primary btn-lg" href="{{ url_for('home.selectCourseForm') }}">我要选课</a></p>
+                  </div>
+              </div>
+          </div>
+      </div><!-- /.row -->
+    </div><!--/.container-->
+
+{% endblock page_content %}
+
+

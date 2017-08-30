@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block metas %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+{% endblock metas %}
+
+    {% block title %}{{ super() }}{% endblock title %}
+
+{% block styles %}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='content-static/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/offcanvas.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='content-static/select_course.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block navbar %}
+    {% if not current_user.isTeacher %}
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ current_user.realname }}</a>
+            <div id="mydropdown" class="dropdown-menu" aria-labelledby="Preview" style="min-width:0rem;">
+                <a class="dropdown-item" href="{{ url_for('home.list_courses') }}">已选课程</a>
+				<a class="dropdown-item" href="{{ url_for('home.selectCourseForm') }}">我要选课</a>
+				<a class="dropdown-item" href="#">修改信息</a>
+				<a class="dropdown-item" href="{{ url_for('auth.logout') }}">退出登录</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% endif %}
+{% endblock navbar %}
+
+{% block page_content %}
+   <div class="container">
+
+      <form action="" method="POST" class="form-signin">
+          <h2 class="form-signin-heading">Edit an account</h2>
+
+          {{ form.csrf_token }}
+          {{ form.hidden_tag() }}
+
+
+          {{ form.realname(class="form-control", placeholder="真实姓名", value=name, required=True) }}
+
+
+          {{ form.password(class="form-control", placeholder="新密码", required=True) }}
+
+
+          {{ form.confirm_password(class="form-control", placeholder="确认新密码") }}
+
+          {{ form.submit(class="btn btn-outline-success my-2 my-sm-0") }}
+
+      </form>
+
+
+
+
+    </div> <!-- /container -->
+
+
+{% endblock page_content %}
+
+{% block scripts %}
+{{ super() }}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ url_for('static', filename='content-static/ie10-viewport-bug-workaround.js') }}"></script>
+{% endblock scripts %}
