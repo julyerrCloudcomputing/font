@@ -43,3 +43,13 @@ input[type="submit"]{
     width: 300px;
     cursor: pointer;
 }
+
+.myfixedbutton{
+    /*position: fixed;
+    top: 40px;*/
+    text-decoration: none;
+    background-color: #28a745;
+    border-radius: .25rem;
+    border: none;
+    color: #fff;
+}
