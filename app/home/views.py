@@ -53,10 +53,14 @@ def selectCourse():  # 查询表单提交处理函数
     nums = request.form['nums']
     course = Course.query.filter_by(courseNums=nums).first()
     if course:
-        current_user.courses.append(course)
-        db.session.commit()
-        flash(u'选课成功')
-        return redirect(url_for('home.list_courses'))
+		try:
+			current_user.courses.append(course)
+			db.session.commit()
+			flash(u'选课成功')
+			return redirect(url_for('home.list_courses'))
+		except:
+			flash(u'选课失败，可能是您已经拥有该门课程')
+			return redirect(url_for('home.list_courses'))
     else:
         flash(u'选课码无效')
         return redirect(url_for('home.selectCourseForm'))
