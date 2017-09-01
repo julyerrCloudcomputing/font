@@ -19,14 +19,10 @@
 
 {% block content %}
         {% for message in get_flashed_messages() %}
-    <div class="myalert row">
-        <div class="col"></div>
-        <div class="col-9 alert alert-warning">
+        <div class="col alert alert-danger" style="position:fixed;z-index:1030;top:0px;text-align:center;">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ message }}
         </div>
-        <div class="col"></div>
-    </div>
         {% endfor %}
 
 

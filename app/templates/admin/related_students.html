@@ -39,7 +39,7 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="">所有学生名单 <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ url_for('home.teacher_dashboard') }}">所有学生名单</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('admin.list_courses') }}">我的课程</a>
@@ -48,44 +48,33 @@
               <a class="nav-link" href="{{ url_for('admin.list_experiments') }}">我的实验</a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.related_students') }}">关联学生名单</a>
+              <a class="nav-link active" href="">关联学生名单<span class="sr-only">(current)</span></a>
             </li>
           </ul>
-
         </nav>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>学生花名册</h1>
+
+            {% for course in courses %}
+          <h1>{{ course.name }}</h1>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>学号</th>
-                  <th>姓名</th>
-                  <th>修改信息</th>
-                  <th>删除账号</th>
                 </tr>
               </thead>
               <tbody>
-              {% for student in students %}
+              {% for students in studentsList[loop.index0] %}
                 <tr>
-                  <td>{{ student.name }}</td>
-                  <td>{{ student.realname }}</td>
-                  <td>
-                      <a href="{{ url_for('admin.edit_account', name=student.name) }}" class="">
-                      Edit
-                      </a>
-                  </td>
-                  <td>
-                      <a href="{{ url_for('admin.delete_account', name=student.name) }}" class="">
-                      Delete
-                      </a>
-                  </td>
+                  <td>{{students[0]}}</td>
                 </tr>
               {% endfor %}
               </tbody>
             </table>
           </div>
+            <br/>
+            {% endfor %}
         </main>
       </div>
     </div>

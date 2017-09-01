@@ -53,8 +53,9 @@
 
 <div class="form-row">
     <div class="form-group col-md-3">
-  {{ form.courseName.label(class="control-label") }}
-  {{ form.courseName(class="form-control", required=True, placeholder="所属课程", style="height:43px") }}
+  {{ form.courseNums.label(class="control-label") }}
+  {{ form.courseNums(class="form-control", required=True, placeholder="所属课程", style="height:43px") }}
+        <small class="text-muted">若忘记实验所属课程的选课口令，可以提交后再修改</small>
     </div>
     <div class="form-group col-md-3">
   {{ form.containerName.label(class="control-label") }}

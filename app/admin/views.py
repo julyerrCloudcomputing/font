@@ -4,7 +4,7 @@ from flask_login import current_user, login_required, logout_user
 from . import admin
 from forms import CourseForm, ExperimentForm
 from .. import db
-from ..models import Student,Teacher,Experiment,Course
+from ..models import Student,Teacher,Experiment,Course, registrations
 from ..auth.forms import UpdateForm
 from werkzeug.security import generate_password_hash
 import string, random
@@ -25,26 +25,16 @@ def edit_course(name):
     """
     Edit a course
     """
-
-#############################################################
     if not current_user.isTeacher:
         abort(403)    
     add_course = False
-#############################################################
-
-    course = Course.query.filter_by(name=name).first()
+    course = Course.query.filter_by(courseNums=name).first()
     form = CourseForm(obj=course)
     if form.validate_on_submit():
-        if Course.query.filter_by(form.courseNums.data).first().name is not name:
-            flash(u'选课口令已存在，请更改')
-            return redirect(url_for('admin.edit_course', name=name))
         course.name = form.name.data
         course.description = form.description.data
-        course.courseNums = form.courseNums.data
         db.session.commit()
         flash(u'课程信息修改成功')
-
-        # redirect to the courses page
         return redirect(url_for('admin.list_courses'))
 
     form.description.data = course.description
@@ -92,7 +82,7 @@ def delete_course(name):
     Delete a course from the database
     """
 
-    course = Course.query.filter_by(name=name).first()
+    course = Course.query.filter_by(courseNums=name).first()
     db.session.delete(course)
     db.session.commit()
     flash(u'成功删除该课程')
@@ -109,23 +99,25 @@ def list_experiments():
     List all experiments
     """
     experiments = []
-    for i in Course.query.filter_by(teacherName=current_user.name):
-        for j in Experiment.query.filter_by(courseName=i.name).all():
-            experiments.append(j)
+    # for course in Course.query.filter_by(teacherName=current_user.name):
+    #     for experiment in Experiment.query.filter_by(courseNums=course.courseNums).all():
+    #         experiments.append(experiment)
+    for experiment in Experiment.query.filter_by(teacherName=current_user.name):
+        experiments.append(experiment)
     return render_template('admin/experiments/experiments.html',
                            experiments=experiments, title='experiments')
 
 
-@admin.route('/experiments/delete/<string:name>', methods=['GET', 'POST'])
+@admin.route('/experiments/delete/<string:id>', methods=['GET', 'POST'])
 @login_required
-def delete_experiment(name):
+def delete_experiment(id):
     if not current_user.isTeacher:
         abort(403)
     """
     Assign a department and a role to an experiment
     """
 
-    experiment = Experiment.query.filter_by(name=name).first()
+    experiment = Experiment.query.filter_by(id=id).first()
 
     db.session.delete(experiment)
     db.session.commit()
@@ -133,9 +125,9 @@ def delete_experiment(name):
 
     return redirect(url_for('admin.list_experiments'))
 
-@admin.route('/experiments/edit/<string:name>', methods=['GET', 'POST'])
+@admin.route('/experiments/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
-def edit_experiment(name):
+def edit_experiment(id):
     if not current_user.isTeacher:
         abort(403)
     """
@@ -144,14 +136,16 @@ def edit_experiment(name):
 
     add_experiment = False
 
-    experiment = Experiment.query.filter_by(name=name).first()
+    experiment = Experiment.query.filter_by(id=id).first()
     form = ExperimentForm(obj=experiment)
     if form.validate_on_submit():
         experiment.name = form.name.data
         experiment.description = form.description.data
         experiment.content = form.content.data
-        experiment.courseName = form.courseName.data
+        experiment.courseNums = form.courseNums.data.courseNums
+        # type(form.courseNums.data) is app.models.course
         experiment.containerName = form.containerName.data# .name
+        # type(form.containerName.data) is unicode
         db.session.commit()
         flash(u'实验修改成功')
 
@@ -161,7 +155,7 @@ def edit_experiment(name):
     experiment.name = form.name.data
     experiment.description = form.description.data
     experiment.content = form.content.data
-    experiment.courseName = form.courseName.data
+    experiment.courseNums = form.courseNums.data# .courseNums
     experiment.containerName = form.containerName.data
     return render_template('admin/experiments/experiment.html', add_experiment=add_experiment,
                            form=form, title="Edit experiment")
@@ -180,7 +174,8 @@ def add_experiment():
     form = ExperimentForm()
     if form.validate_on_submit():
         experiment = Experiment(name=form.name.data,description=form.description.data,
-            content=form.content.data,courseName=form.courseName.data,containerName=form.containerName.data)  # .name)
+                    content=form.content.data,courseNums=form.courseNums.data.courseNums,
+                    containerName=form.containerName.data, teacherName=current_user.name)  # .name)
         try:
             db.session.add(experiment)
             db.session.commit()
@@ -218,7 +213,7 @@ def update_infos():
         db.session.close()
         logout_user()
         return redirect(url_for('auth.login'))
-    return render_template('home/update_infos.html', form=form)
+    return render_template('home/update_infos.html', form=form, name=current_user.realname)
 
 
 @admin.route('/edit_account/delete/<string:name>', methods=['GET', 'POST'])
@@ -257,3 +252,20 @@ def edit_account(name):
         flash(u'修改成功')
         return redirect(url_for('home.teacher_dashboard'))
     return render_template('home/update_infos.html', name=realname, form=form)
+
+
+@admin.route('/related_students')
+def related_students():
+    if not current_user.isTeacher:
+        abort(403)
+    """
+    list all related students.
+    """
+    courses = Teacher.query.filter_by(name=current_user.name).first().courses
+    studentsList = []
+    for course in courses:
+        students = db.session.query(registrations).filter_by(courseNums=course.courseNums).all()
+        studentsList.append(students)
+    print studentsList, '\n\n\n'
+    return render_template('admin/related_students.html',
+                           courses=courses, studentsList=studentsList)

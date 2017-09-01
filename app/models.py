@@ -2,16 +2,17 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.schema import Sequence
+import uuid
 
 from app import db, login_manager
 
 class Teacher(UserMixin,db.Model):
     __tablename__ = 'teachers'
 
-    name = db.Column(db.String(60), nullable=False,primary_key=True)
+    name = db.Column(db.String(60), primary_key=True)
     realname = db.Column(db.String(30), nullable=False)
     password_hash = db.Column(db.String(128),nullable=False)
-    isTeacher = db.Column(db.Boolean(),default=True)
+    isTeacher = db.Column(db.Boolean(), nullable=False, default=True)
     courses = db.relationship('Course', backref='teachers',
                                 lazy='dynamic')
     @property
@@ -41,7 +42,7 @@ class Teacher(UserMixin,db.Model):
 
 registrations = db.Table('registrations',  
     db.Column('studentName', db.String(60), db.ForeignKey('students.name')),  
-    db.Column('courseName', db.String(60), db.ForeignKey('courses.name'))  
+    db.Column('courseNums', db.String(60), db.ForeignKey('courses.courseNums'))
 )  
   
 
@@ -92,11 +93,10 @@ def load_user(user_id):
 class Course(db.Model):
 
     __tablename__ = 'courses'
-
-    name = db.Column(db.String(60),primary_key=True)
+    courseNums = db.Column(db.String(60), primary_key=True)
+    name = db.Column(db.String(60), primary_key=False, nullable=False)
     description = db.Column(db.String(200))
     teacherName = db.Column(db.String(60), db.ForeignKey('teachers.name'))
-    courseNums = db.Column(db.String(60), unique=True)
     # students = db.relationship('Student', backref='courses',
     #                             lazy='dynamic')
     experiments = db.relationship('Experiment', backref='courses',
@@ -104,15 +104,19 @@ class Course(db.Model):
     def __repr__(self):
         return self.name.encode('utf-8')
 
+def gen_id():
+    return uuid.uuid4().hex
+
 class Experiment(db.Model):
 
     __tablename__ = 'experiments'
-
-    name = db.Column(db.String(60), primary_key=True)
+    id = db.Column(db.String(60), default=gen_id, primary_key=True)
+    name = db.Column(db.String(60))
     description = db.Column(db.String(200))
     content = db.Column(db.LargeBinary)
-    courseName = db.Column(db.String(60), db.ForeignKey('courses.name'))
+    courseNums = db.Column(db.String(60), db.ForeignKey('courses.courseNums'))
     containerName = db.Column(db.String(60))
+    teacherName = db.Column(db.String(60), nullable=False)
     # students = db.relationship('Student', backref='courses',
     #                             lazy='dynamic')
     def __repr__(self):

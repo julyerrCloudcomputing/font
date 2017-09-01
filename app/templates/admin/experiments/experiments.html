@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link active" href="">我的实验 <span class="sr-only">(current)</span></a>
             </li>
+              <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin.related_students') }}">关联学生名单</a>
+            </li>
           </ul>
         </nav>
 
@@ -71,17 +74,17 @@
                     <td>
                         {{ experiment.description }}
                     </td>
-                    <td> {{ experiment.courseName }}</td>
+                    <td> {{ experiment.courseNums }}</td>
                     <td>
                        {{ experiment.containerName }}
                     </td>
                     <td>
-                        <a href="{{ url_for('admin.edit_experiment', name=experiment.name) }}" class="">
+                        <a href="{{ url_for('admin.edit_experiment', id=experiment.id) }}" class="">
                              Edit
                         </a>
                     </td>
                     <td>
-                        <a href="{{ url_for('admin.delete_experiment', name=experiment.name) }}" class="">
+                        <a href="{{ url_for('admin.delete_experiment', id=experiment.id) }}" class="">
                              Delete
                         </a>
                     </td>

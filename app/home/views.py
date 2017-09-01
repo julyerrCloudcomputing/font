@@ -7,6 +7,7 @@ from .. import db
 from ..auth.forms import UpdateForm
 from werkzeug.security import generate_password_hash
 
+
 # from ..models import Employee
 
 
@@ -32,11 +33,13 @@ def list_courses():
     courses = Student.query.filter_by(name=current_user.name).first().courses
     experimentSet = []
     for i in courses:
-        experiments = Experiment.query.filter_by(courseName=i.name).all()
+        experiments = Experiment.query.filter_by(courseNums=i.courseNums).all()
         experimentSet.append(experiments)
-    # return render_template('home/list_courses.html', title='Student Classes', courses=courses, experimentSet=experimentSet)
-    print '\n\n', type(courses), '\n\n'
-    return render_template('home/list_courses.html', courses=courses, experimentSet=experimentSet, name=current_user.realname)
+    # return render_template('home/list_courses.html', title='Student Classes', courses=courses,
+    # experimentSet=experimentSet)
+    return render_template('home/list_courses.html', courses=courses, experimentSet=experimentSet,
+                           name=current_user.realname)
+
 
 @home.route('/selectCourseForm', methods=['GET', 'POST'])
 @login_required
@@ -78,4 +81,4 @@ def update_infos():
         db.session.close()
         logout_user()
         return redirect(url_for('auth.login'))
-    return render_template('home/update_infos.html', name=current_user.name,form=form)
+    return render_template('home/update_infos.html', name=current_user.realname, form=form)

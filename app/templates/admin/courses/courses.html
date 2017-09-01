@@ -34,6 +34,7 @@
 {% endblock navbar %}
 
 {% block page_content %}
+
         <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
@@ -46,6 +47,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('admin.list_experiments') }}">我的实验</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin.related_students') }}">关联学生名单</a>
             </li>
           </ul>
         </nav>
@@ -70,12 +74,12 @@
                     <td> {{ course.description }} </td>
                     <td> {{ course.courseNums }} </td>
                     <td>
-                        <a href="{{ url_for('admin.edit_course', name=course.name) }}" class="">
+                        <a href="{{ url_for('admin.edit_course', name=course.courseNums) }}" class="">
                             <i class="icon-edit"></i> Edit
                         </a>
                     </td>
                     <td>
-                        <a href="{{ url_for('admin.delete_course', name=course.name) }}" class="">
+                        <a href="{{ url_for('admin.delete_course', name=course.courseNums) }}" class="">
                             <i class="icon-remove"></i> Delete
                         </a>
                     </td>
