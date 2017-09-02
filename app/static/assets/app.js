@@ -10,11 +10,11 @@
 
   });
  
-  app.controller('PlayController', ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$window', 'TerminalService', 'KeyboardShortcutService', function($scope, $log, $http, $location, $timeout, $mdDialog, $window, TerminalService, KeyboardShortcutService) {
+  app.controller('PlayController', ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$window', 'TerminalService','InstanceService', 'KeyboardShortcutService', function($scope, $log, $http, $location, $timeout, $mdDialog, $window, TerminalService, InstanceService,KeyboardShortcutService) {
     $scope.getSession = function(sessionId) {
       $http({
         method: 'GET',
-        url: 'http://116.196.86.115/sessions/' + $scope.sessionId,
+        url: $scope.backendIp+'/sessions/' + $scope.sessionId,
       }).then(function(response) {
         $scope.setSessionState(response.data.ready);
 
@@ -25,7 +25,7 @@
             $scope.$apply();
           }, 1000);
         }
-        var socket = io('http://116.196.86.115',{ path: '/sessions/' + sessionId + '/ws' });
+        var socket = io($scope.backendIp+'',{ path: '/sessions/' + sessionId + '/ws' });
 
         socket.on('session ready', function(ready) {
           $scope.setSessionState(ready);
@@ -115,16 +115,20 @@
       });
     }
 
-
+    $scope.backendIp = 'http://116.196.86.115:11080';
+    $scope.registryIp = '10.65.7.183/library/';
+    
     $http({
       method: 'POST',
-      url: 'http://116.196.86.115/',
-      data : { ImageName : 'centos' }
+      url: $scope.backendIp+'/pwd',
+      data: {  DurReq: '6h'}
     }).then(function(response) {
       console.log(response.data)
       $scope.sessionId = response.data.session_id;
       $scope.getSession($scope.sessionId)
     });
+    $scope.isTeacher=false;
+    $scope.isImageSearched=false;
     $scope.instances = [];
     $scope.idx = {};
     $scope.selectedInstance = null;
@@ -136,12 +140,21 @@
     $scope.deleteInstanceBtnText = 'Delete';
     $scope.isInstanceBeingDeleted = false;
 
+     if(parseInt(document.getElementById('isTeacher').innerHTML)){
+          $scope.isTeacher=true
+        }else{
+          $scope.isTeacher=false
+        }
+        console.log("isTeacher" + $scope.isTeacher)
+
     var selectedKeyboardShortcuts = KeyboardShortcutService.getCurrentShortcuts();
     angular.element($window).bind('resize', function() {
       if ($scope.selectedInstance) {
         $scope.resize($scope.selectedInstance.term.proposeGeometry());
       }
     });
+
+
 
     $scope.$on("settings:shortcutsSelected", function(e, preset) {
       selectedKeyboardShortcuts = preset;
@@ -187,11 +200,23 @@
 
     $scope.newInstance = function() {
       updateNewInstanceBtnState(true);
-      var ImageName = 'ubuntu';
+      var ImageName
+      console.log("isTeacher ? "+$scope.isTeacher)
+      if($scope.isTeacher) {
+        ImageName=InstanceService.getDesiredImage()
+      }else{
+        ImageName = document.getElementById('imageName').innerHTML;
+      }
+      if(ImageName==null){
+        alert("please choose the image first")
+        updateNewInstanceBtnState(false);
+        return
+      }
+      console.log("ImageName "+ImageName)
       $http({
         method: 'POST',
-        url: 'http://116.196.86.115/sessions/' + $scope.sessionId + '/instances',
-        data : { ImageName : ImageName }
+        url: $scope.backendIp+'/sessions/' + $scope.sessionId + '/instances',
+        data : { ImageName : $scope.registryIp+ImageName }
       }).then(function(response) {
         var i = $scope.upsertInstance(response.data);
         $scope.showInstance(i);
@@ -259,8 +284,8 @@
     $scope.deleteInstance = function(instance) {
       updateDeleteInstanceBtnState(true);
       $http({
-        method: 'DELETE',
-        url: 'http://116.196.86.115/sessions/' + $scope.sessionId + '/instances/' + instance.name,
+        method: 'POST',
+        url: $scope.backendIp+'/sessions/' + $scope.sessionId + '/instances/' + instance.name,
       }).then(function(response) {
         $scope.removeInstance(instance.name);
       }, function(response) {
@@ -365,13 +390,18 @@
   })
   .component("settingsDialog", {
     templateUrl : "settings-modal.html",
-    controller : function($mdDialog,KeyboardShortcutService, $rootScope,$scope, TerminalService) {
+    controller : function($mdDialog,KeyboardShortcutService, $rootScope,$scope, $http,InstanceService,TerminalService) {
       var $ctrl = this;
       $ctrl.$onInit = function() {
         $ctrl.keyboardShortcutPresets = KeyboardShortcutService.getAvailablePresets();
         $ctrl.selectedShortcutPreset = KeyboardShortcutService.getCurrentShortcuts();
-        // $ctrl.selectedInstanceImage = InstanceService.getDesiredImage();
         $ctrl.terminalFontSizes = TerminalService.getFontSizes();
+        if(parseInt(document.getElementById('isTeacher').innerHTML)){
+          $scope.isTeacher=true
+        }else{
+          $scope.isTeacher=false
+        }
+        console.log("ctrl is teacher ?" + $scope.isTeacher)
       };
 
       $ctrl.currentShortcutConfig = function(value) {
@@ -394,10 +424,75 @@
         return TerminalService.getFontSize();
       };
 
+        $ctrl.ImageSearch = function(term){
+        if (term !== undefined){
+          InstanceService.prepopulateAvailableImages(term,function(){
+            $ctrl.instanceImages = InstanceService.getAvailableImages();
+            $scope.isImageSearched = true ;
+          })
+        }else{
+          alert("please set the searching property");
+          return ;
+        }
+      }
+        $ctrl.currentDesiredInstanceImage = function(value) {
+        if (value !== undefined) {
+          InstanceService.setDesiredImage(value);
+        }
+        return InstanceService.getDesiredImage();
+      };
+     
+
       $ctrl.close = function() {
         $mdDialog.cancel();
       }
     }
+  })
+
+
+  .service("InstanceService", function($http) {
+    var instanceImages = [];
+    //prepopulateAvailableImages();
+
+    return {
+      getAvailableImages : getAvailableImages,
+      setDesiredImage : setDesiredImage,
+      getDesiredImage : getDesiredImage,
+      prepopulateAvailableImages : prepopulateAvailableImages,
+    };
+      function prepopulateAvailableImages(term,cb) {
+      $http({
+        method: 'POST',
+        url: '/images/search',
+        data : JSON.stringify({ "term" : term})
+      }).then(function(response) {
+        instanceImages = response.data;
+        console.log(instanceImages);
+        if(cb) cb();
+        setDesiredImage(instanceImages[0]);
+      }, function(response) {
+        alert("no such image could found")
+      })        
+    }
+
+     function getAvailableImages() {
+      return instanceImages;
+    }
+
+    function getDesiredImage() {
+      var image = localStorage.getItem("settings.desiredImage");
+      if (image == null)
+        return null;
+      return image;
+    }
+
+    function setDesiredImage(image) {
+      if (image === null)
+        localStorage.removeItem("settings.desiredImage");
+      else
+        localStorage.setItem("settings.desiredImage", image);
+    }
+
   })
    // .run(function(InstanceService) { /* forcing pre-populating for now */ })
   .service("KeyboardShortcutService", ['TerminalService', function(TerminalService) {
@@ -523,3 +618,4 @@
     }
   }]);
 })();
+

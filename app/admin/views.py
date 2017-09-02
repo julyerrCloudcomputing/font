@@ -269,3 +269,10 @@ def related_students():
     print studentsList, '\n\n\n'
     return render_template('admin/related_students.html',
                            courses=courses, studentsList=studentsList)
+
+@admin.route('/experiment_before', methods=['GET', 'POST'])
+@login_required
+def experiment_before():
+    # experiment = Experiment.query.filter_by(name=name).first()
+    return render_template('pwd/index.html',isTeacher=1, title='terminal online')
+
