@@ -1,15 +1,14 @@
 # coding=utf-8
-from flask import abort, flash, redirect, render_template, url_for, request
+from flask import abort, flash, redirect, render_template, url_for, request,jsonify
 from flask_login import login_required, current_user, logout_user
 from ..models import Student, Teacher, Experiment, Course
 from . import home
 from .. import db
 from ..auth.forms import UpdateForm
 from werkzeug.security import generate_password_hash
+import json
 
-
-# from ..models import Employee
-
+from ..models import Container
 
 
 # @home.route('/dashboard', methods=['GET', 'POST'])
@@ -53,10 +52,14 @@ def selectCourse():  # 查询表单提交处理函数
     nums = request.form['nums']
     course = Course.query.filter_by(courseNums=nums).first()
     if course:
-        current_user.courses.append(course)
-        db.session.commit()
-        flash(u'选课成功')
-        return redirect(url_for('home.list_courses'))
+		try:
+			current_user.courses.append(course)
+			db.session.commit()
+			flash(u'选课成功')
+			return redirect(url_for('home.list_courses'))
+		except:
+			flash(u'选课失败，可能是您已经拥有该门课程')
+			return redirect(url_for('home.list_courses'))
     else:
         flash(u'选课码无效')
         return redirect(url_for('home.selectCourseForm'))
@@ -66,7 +69,7 @@ def selectCourse():  # 查询表单提交处理函数
 @login_required
 def experiment(name):
     experiment = Experiment.query.filter_by(name=name).first()
-    return render_template('pwd/index.html', experiment=experiment, title='terminal online')
+    return render_template('pwd/index.html', content=experiment.content,containerName=experiment.containerName,isTeacher=0, title='terminal online')
 
 
 @home.route('/update_infos', methods=['GET', 'POST'])
@@ -82,3 +85,11 @@ def update_infos():
         logout_user()
         return redirect(url_for('auth.login'))
     return render_template('home/update_infos.html', name=current_user.realname, form=form)
+
+@home.route('/images/search', methods=['GET', 'POST'])
+def images_search():
+    imageName = json.loads(request.get_data())
+    imageNames = []
+    for i in Container.query.filter(Container.name.like('%'+imageName['term']+'%')).all():
+        imageNames.append(i.name)
+    return jsonify(imageNames) 
