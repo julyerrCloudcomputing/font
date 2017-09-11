@@ -1,0 +1,2 @@
+需要修改experiments表中的content列类型为mediumblob
+增加选课表registrations表主键，两列共同为主键

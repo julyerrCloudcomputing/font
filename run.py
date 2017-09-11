@@ -11,6 +11,9 @@ app = create_app(config_name)
 manager=Manager(app)
 migrate = Migrate(app,db)
 manager.add_command('db',MigrateCommand)
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 if __name__ == '__main__':
     manager.run()
