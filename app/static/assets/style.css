@@ -62,3 +62,10 @@ md-input-container .md-errors-spacer {
 .md-mini {
     min-width: 24px;
 }
+
+.contentHeader{
+    text-align:center;
+    background:rgb(63, 81, 181);
+    width:100%;
+    color:#ffffff;
+}
