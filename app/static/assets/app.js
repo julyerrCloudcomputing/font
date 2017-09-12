@@ -115,7 +115,7 @@
       });
     }
 
-    $scope.backendIp = 'http://116.196.86.115:11080';
+    $scope.backendIp = 'http://10.65.7.30';
     $scope.registryIp = '10.65.7.183/library/';
     
     $http({
@@ -246,7 +246,7 @@
 
     
     $scope.getProxyUrl = function(instance, port) {
-      var url = 'http://pwd' + instance.ip.replace(/\./g, '-') + '-' + port + '.' + '116.196.86.115';
+      var url = 'http://pwd' + instance.ip.replace(/\./g, '-') + '-' + port + '.' + '10.65.7.30';
 
       return url;
     }

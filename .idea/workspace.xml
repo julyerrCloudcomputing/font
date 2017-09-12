@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc75b938-a237-4dc3-b7ca-81286f2ad6db" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/home/views.py" afterPath="$PROJECT_DIR$/app/home/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/assets/style.css" afterPath="$PROJECT_DIR$/app/static/assets/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/home/list_courses.html" afterPath="$PROJECT_DIR$/app/templates/home/list_courses.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/pwd/index.html" afterPath="$PROJECT_DIR$/app/templates/pwd/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-    </list>
+    <list default="true" id="cc75b938-a237-4dc3-b7ca-81286f2ad6db" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
