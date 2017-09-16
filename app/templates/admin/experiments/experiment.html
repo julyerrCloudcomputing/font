@@ -33,14 +33,10 @@
 <div class="container">
 <form action="" method="post" class="">
   {{ form.csrf_token }}
-    <h2 class="form-signin-heading">
-    {% if add_experiment %}
-    Add experiment
-    {% else %}
-    Edit experiment
-    {% endif %}
-    </h2>
+
 <div class="form-row">
+    <div class="form-group col-md-3">
+    </div>
     <div class="form-group col-md-3">
     {{ form.name.label(class="control-label") }}
   {{ form.name(class="form-control", required=True) }}
@@ -53,6 +49,8 @@
 
 <div class="form-row">
     <div class="form-group col-md-3">
+    </div>
+    <div class="form-group col-md-3">
   {{ form.courseNums.label(class="control-label") }}
   {{ form.courseNums(class="form-control", required=True, placeholder="所属课程", style="height:43px") }}
         <small class="text-muted">若忘记实验所属课程的选课口令，可以提交后再修改</small>
@@ -62,7 +60,19 @@
   {{ form.containerName(class="form-control", required=True, style="height:43px") }}
     </div>
 </div>
-    <div class="myckeditor">
+<div class="form-row">
+    <div class="form-group col-md-3">
+    </div>
+    <div class="form-group col-md-3">
+    </div>
+    <div class="col-md-3">
+        <a href="{{ url_for('admin.experiment_before') }}" class="btn btn-outline-success my-2 my-sm-0" target="_blank" style="width:270px;height=40px;">前往实验平台</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
       {{ form.content.label(class="control-label") }}<br/>
       {{ form.content(class="ckeditor control-label") }}
     <script type="text/javascript">
@@ -72,13 +82,15 @@
            }
        );</script>
     </div>
+    <div class="col">
+    </div>
+</div>
     <br/>
     <div class="form-row">
         <div class="col-md-3">
-  {{ form.submit(class="btn btn-outline-success my-2 my-sm-0", style="width:270px;") }}
         </div>
         <div class="col-md-3">
-            <a href="{{ url_for('admin.experiment_before') }}" class="btn btn-outline-success my-2 my-sm-0 myfixedbutton">前往实验平台</a>
+  {{ form.submit(class="btn btn-outline-success my-2 my-sm-0", style="width:270px;") }}
         </div>
     </div>
 </form>
