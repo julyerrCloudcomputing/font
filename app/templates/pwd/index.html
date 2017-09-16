@@ -2,6 +2,7 @@
 <html ng-app="DockerPlay" ng-controller="PlayController">
     <head>
         <title>{{ title }}</title>
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons" />
         <link rel="stylesheet" href="https://cdn.bootcss.com/angular-material/1.1.0/angular-material.min.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='assets/xterm.css' ) }}" />
@@ -9,7 +10,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='assets/style.css' ) }}" />
     </head>
     <body layout="row">
-    <div layout="column" style="width: 100%" ng-if="!isTeacher">{{ content|safe }}
+    <div layout="column" style="width: 66%;overflow-y:scroll;padding:20px;" ng-if="!isTeacher">
+        <div class="contentHeader">
+        <h3 >实验指导与实验步骤</h3>
+        </div>
+        {{ content|safe }}
         <p id="imageName" style="visibility: hidden;">{{ containerName }}</p>
     </div>
       <div layout="column" style="width: 100%">

@@ -59,17 +59,17 @@
 
       <div class="row">
           {% if courses.all() %}
-            {% for i in courses %}
+            {% for course in courses %}
           <div class="col-lg-4">
               <div class="card">
-                  <h4 class="card-header">{{i.name}}</h4>
+                  <h4 class="card-header">{{course.name}}</h4>
                   <div class="card-body">
-                    <p class="card-text">{{i.description}}</p>
+                    <p class="card-text">{{course.description}}</p>
                   </div>
                   {% if experimentSet %}
                   <ul class="list-group list-group-flush">
-                      {% for j in experimentSet[loop.index0] %}
-                      <li class="list-group-item"><a class="btn" href="{{ url_for('home.experiment',name=j.name) }}">{{ j.name }}</a></li>
+                      {% for experiment in experimentSet[loop.index0] %}
+                      <li class="list-group-item"><a class="btn" href="{{ url_for('home.experiment',id=experiment.id) }}">{{ experiment.name }}</a></li>
                       {% endfor %}
                   </ul>
                   {% endif %}
