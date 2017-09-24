@@ -13,8 +13,6 @@ import string, random
 @admin.route('/courses', methods=['GET', 'POST'])
 @login_required
 def list_courses():
-    if not current_user.isTeacher:
-        abort(403)    
     courses = Course.query.filter_by(teacherName=current_user.name).all()
     return render_template('admin/courses/courses.html',
                            courses=courses, title="courses")
@@ -26,7 +24,7 @@ def edit_course(name):
     Edit a course
     """
     if not current_user.isTeacher:
-        abort(403)    
+        abort(403)
     add_course = False
     course = Course.query.filter_by(courseNums=name).first()
     form = CourseForm(obj=course)
@@ -47,8 +45,6 @@ def edit_course(name):
 @admin.route('/courses/add', methods=['GET', 'POST'])
 @login_required
 def add_course():
-    if not current_user.isTeacher:
-        abort(403)    
     add_course = True
     courseNums = ''.join(random.sample(string.ascii_letters+string.digits, 8))
     form = CourseForm()
@@ -76,8 +72,6 @@ def add_course():
 @admin.route('/courses/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
 def delete_course(name):
-    if not current_user.isTeacher:
-        abort(403)
     """
     Delete a course from the database
     """
@@ -93,8 +87,6 @@ def delete_course(name):
 @admin.route('/experiments')
 @login_required
 def list_experiments():
-    if not current_user.isTeacher:
-        abort(403)    
     """
     List all experiments
     """
@@ -111,8 +103,6 @@ def list_experiments():
 @admin.route('/experiments/delete/<string:id>', methods=['GET', 'POST'])
 @login_required
 def delete_experiment(id):
-    if not current_user.isTeacher:
-        abort(403)
     """
     Assign a department and a role to an experiment
     """
@@ -128,8 +118,6 @@ def delete_experiment(id):
 @admin.route('/experiments/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
 def edit_experiment(id):
-    if not current_user.isTeacher:
-        abort(403)
     """
     Edit a experiment
     """
@@ -163,8 +151,6 @@ def edit_experiment(id):
 @admin.route('/experiments/add', methods=['GET', 'POST'])
 @login_required
 def add_experiment():
-    if not current_user.isTeacher:
-        abort(403)
     """
     Add a experiment
     """
@@ -202,8 +188,6 @@ def ckupload():
 @admin.route('/update_infos', methods=['GET', 'POST'])
 @login_required
 def update_infos():
-    if not current_user.isTeacher:
-        abort(403)
     form = UpdateForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(name=current_user.name).first()
@@ -219,8 +203,6 @@ def update_infos():
 @admin.route('/edit_account/delete/<string:name>', methods=['GET', 'POST'])
 @login_required
 def delete_account(name):
-    if not current_user.isTeacher:
-        abort(403)
     """
     Assign a department and a role to an experiment
     """
@@ -236,8 +218,6 @@ def delete_account(name):
 @admin.route('/edit_account/edit/<string:name>', methods=['GET', 'POST'])
 @login_required
 def edit_account(name):
-    if not current_user.isTeacher:
-        abort(403)
     """
     Edit a experiment
     """
@@ -256,8 +236,6 @@ def edit_account(name):
 
 @admin.route('/related_students')
 def related_students():
-    if not current_user.isTeacher:
-        abort(403)
     """
     list all related students.
     """
@@ -276,3 +254,7 @@ def experiment_before():
     # experiment = Experiment.query.filter_by(name=name).first()
     return render_template('pwd/index.html',isTeacher=1, title='terminal online')
 
+@admin.before_request
+def teacher_required():
+    if not current_user.isTeacher:
+        abort(403)

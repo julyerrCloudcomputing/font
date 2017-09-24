@@ -30,63 +30,6 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-# @auth.route('/login_student', methods=['GET', 'POST'])
-# def login_student():
-#     """
-#     Handle requests to the /login route
-#     Log an employee in through the login form
-#     """
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#
-#         # check whether employee exists in the database and whether
-#         # the password entered matches the password in the database
-#         student = Student.query.filter_by(name=form.name.data).first()
-#         if student is not None and student.verifypassword(
-#                 form.password.data):
-#             # log employee in
-#             login_user(student)
-#
-#             # redirect to the dashboard page after login
-#             return redirect(url_for('home.dashboard'))
-#
-#
-#         # when login details are incorrect
-#         else:
-#             flash('Invalid email or password.')
-#
-#     # load login template
-#     return render_template('auth/login.html', form=form, title='Login')
-#
-#
-# @auth.route('/login_teacher', methods=['GET', 'POST'])
-# def login_teacher():
-#     """
-#     Handle requests to the /login route
-#     Log an employee in through the login form
-#     """
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#
-#         # check whether employee exists in the database and whether
-#         # the password entered matches the password in the database
-#         teacher = Teacher.query.filter_by(name=form.name.data).first()
-#         if teacher is not None and teacher.verifypassword(
-#                 form.password.data):
-#             # log employee in
-#             login_user(teacher)
-#
-#             # redirect to the dashboard page after login
-#             return redirect(url_for('home.teacher_dashboard'))
-#
-#
-#         # when login details are incorrect
-#         else:
-#             flash('Invalid email or password.')
-#
-#     # load login template
-#     return render_template('auth/login.html', form=form, title='Login')
-
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     if 'user_id' in session.keys():
