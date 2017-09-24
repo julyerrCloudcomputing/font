@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="cc75b938-a237-4dc3-b7ca-81286f2ad6db" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/admin/views.py" afterPath="$PROJECT_DIR$/app/admin/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/auth/views.py" afterPath="$PROJECT_DIR$/app/auth/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/errors/403.html" afterPath="$PROJECT_DIR$/app/templates/errors/403.html" />
     </list>
+=======
+<<<<<<< HEAD
+    <list default="true" id="47e8bfcf-bc8f-4c2d-b93f-586581b8ca16" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/ckeditor/config.js" afterPath="$PROJECT_DIR$/app/static/ckeditor/config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/static/content-static/select_course.css" afterPath="$PROJECT_DIR$/app/static/content-static/select_course.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/admin/experiments/experiment.html" afterPath="$PROJECT_DIR$/app/templates/admin/experiments/experiment.html" />
+    </list>
+=======
+    <list default="true" id="cc75b938-a237-4dc3-b7ca-81286f2ad6db" name="Default" comment="" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,6 +27,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
+    <leaf>
+      <file leaf-file-name="experiment.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/admin/experiments/experiment.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="318">
+              <caret line="68" column="118" lean-forward="false" selection-start-line="68" selection-start-column="118" selection-end-line="68" selection-end-column="118" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#2;n#div#2;n#form#0;n#div#0;n#!!top" expanded="true" />
+=======
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/home/__init__.py">
@@ -54,22 +76,44 @@
             <state relative-caret-position="180">
               <caret line="257" column="7" lean-forward="true" selection-start-line="257" selection-start-column="7" selection-end-line="257" selection-end-column="7" />
               <folding>
+<<<<<<< HEAD
                 <element signature="e#15#81#0" expanded="true" />
+=======
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/auth/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
               <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
+=======
+<<<<<<< HEAD
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+=======
+      <file leaf-file-name="list_courses.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/home/list_courses.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="76" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/pwd/index.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -87,6 +131,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="299">
               <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="76" />
+=======
+<<<<<<< HEAD
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/static/ckeditor/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="39" column="21" lean-forward="false" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+=======
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/admin/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="131" column="13" lean-forward="false" selection-start-line="131" selection-start-column="13" selection-end-line="131" selection-end-column="13" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
               <folding />
             </state>
           </provider>
@@ -96,14 +155,23 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+<<<<<<< HEAD
+      <find>mycke</find>
+      <find>myckeditor</find>
+      <find>myf</find>
+=======
       <find>j</find>
       <find>i</find>
       <find>content</find>
       <find>/experiment</find>
       <find>home.experiment</find>
+<<<<<<< HEAD
       <find>403</find>
       <find>current_user.isT</find>
       <find>teacher_dashboard</find>
+=======
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
     </findStrings>
     <replaceStrings>
       <replace />
@@ -115,13 +183,23 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/app/static/content-static/select_course.css" />
+        <option value="$PROJECT_DIR$/app/static/ckeditor/config.js" />
+        <option value="$PROJECT_DIR$/app/templates/admin/experiments/experiment.html" />
+        <option value="$PROJECT_DIR$/config.py" />
+=======
         <option value="$PROJECT_DIR$/app/templates/home/list_courses.html" />
         <option value="$PROJECT_DIR$/app/static/assets/style.css" />
         <option value="$PROJECT_DIR$/app/templates/pwd/index.html" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/admin/views.py" />
         <option value="$PROJECT_DIR$/app/home/views.py" />
         <option value="$PROJECT_DIR$/app/auth/views.py" />
         <option value="$PROJECT_DIR$/app/templates/errors/403.html" />
+=======
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
       </list>
     </option>
   </component>
@@ -146,7 +224,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
       <pane id="Scratches" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -163,25 +244,50 @@
               <item name="font" type="b2602c69:ProjectViewProjectNode" />
               <item name="font" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+=======
               <item name="admin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="font" type="b2602c69:ProjectViewProjectNode" />
               <item name="font" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="font" type="b2602c69:ProjectViewProjectNode" />
-              <item name="font" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
+=======
               <item name="home" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
             </path>
             <path>
               <item name="font" type="b2602c69:ProjectViewProjectNode" />
               <item name="font" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="ckeditor" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
+            </path>
+            <path>
+              <item name="font" type="b2602c69:ProjectViewProjectNode" />
+              <item name="font" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="content-static" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
             </path>
             <path>
               <item name="font" type="b2602c69:ProjectViewProjectNode" />
@@ -195,25 +301,40 @@
               <item name="font" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+=======
               <item name="home" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
             </path>
             <path>
               <item name="font" type="b2602c69:ProjectViewProjectNode" />
               <item name="font" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="experiments" type="462c0819:PsiDirectoryNode" />
+=======
               <item name="pwd" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+<<<<<<< HEAD
+      <pane id="Scratches" />
+    </panes>
+  </component>
+=======
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -231,16 +352,54 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
+      <changelist id="47e8bfcf-bc8f-4c2d-b93f-586581b8ca16" name="Default" comment="" />
+      <created>1505534552727</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1505534552727</updated>
+=======
       <changelist id="cc75b938-a237-4dc3-b7ca-81286f2ad6db" name="Default" comment="" />
       <created>1505143884798</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1505143884798</updated>
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-1" y="28" width="1368" height="707" extended-state="6" />
+=======
+<<<<<<< HEAD
+    <frame x="0" y="0" width="1366" height="768" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32866043" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+=======
+    <frame x="53" y="28" width="1368" height="707" extended-state="6" />
+    <editor active="true" />
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -267,6 +426,7 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
   </component>
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -275,14 +435,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/static/content-static/offcanvas.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="157" column="27" lean-forward="true" selection-start-line="157" selection-start-column="27" selection-end-line="157" selection-end-column="27" />
+=======
     <entry file="file://$PROJECT_DIR$/app/home/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/home/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1380">
@@ -321,14 +489,24 @@
         </state>
       </provider>
     </entry>
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/static/content-static/select_course.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+=======
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
     <entry file="file://$PROJECT_DIR$/app/home/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/home/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1587">
@@ -368,14 +546,44 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/home/__init__.py">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/static/ckeditor/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="39" column="21" lean-forward="false" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/templates/home/list_courses_old.html">
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/home/__init__.py">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/templates/admin/experiments/experiment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="68" column="118" lean-forward="false" selection-start-line="68" selection-start-column="118" selection-end-line="68" selection-end-column="118" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#2;n#div#2;n#form#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="25" column="0" lean-forward="true" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/admin/views.py">
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -407,14 +615,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/home/views.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="111">
           <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
           <folding>
             <element signature="e#15#99#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="299">
+          <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="76" />
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+          <folding />
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/app/templates/pwd/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
@@ -425,6 +642,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/templates/errors/403.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -451,5 +669,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 7318d31d3503cca246b2bc05d35c12eb36276738
+>>>>>>> 471b76ba3190700a45d061b1ff084ec597c1b420
   </component>
 </project>
